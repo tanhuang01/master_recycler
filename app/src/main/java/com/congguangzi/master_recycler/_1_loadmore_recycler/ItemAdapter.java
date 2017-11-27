@@ -53,7 +53,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void loadMore(List<Item> set) {
         dataList.addAll(set);
         notifyItemRangeInserted(dataList.size() - set.size(), set.size());
-        if (set.size() < LoadMoreUtils.PAGE_SIZE) {
+        if (set.size() < pageSize()) {
             loaded = true;
         }
         loading = false;
@@ -67,6 +67,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public boolean loaded() {
         return loaded;
+    }
+
+    @Override
+    public int pageSize() {
+        return LoadMoreUtils.PAGE_SIZE;
     }
 
     @Override

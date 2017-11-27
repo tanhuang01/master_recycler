@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.congguangzi.master_recycler.R;
 
@@ -34,8 +35,8 @@ public class LoadMoreRecyclerActivity extends AppCompatActivity implements LoadM
         setContentView(R.layout._1_load_more_recycler_layout);
         ButterKnife.bind(this);
         presenter = new LoadMorePresenter(this);
-        presenter.loadMore(LoadMoreUtils.PAGE_SIZE, 0);
         initRecyclerView();
+        presenter.loadMore(adapter.pageSize(), 0);
     }
 
     private void initRecyclerView() {
@@ -45,6 +46,7 @@ public class LoadMoreRecyclerActivity extends AppCompatActivity implements LoadM
         recycleView.addOnScrollListener(new LoadMoreScrollListener(recycleView) {
             @Override
             public void loadMore(int page, int count) {
+                Toast.makeText(getContext(), "load " + (page + 1), Toast.LENGTH_SHORT).show();
                 ((LoadMore) adapter).setLoading(true);
                 presenter.loadMore(count, count * page);
             }

@@ -13,8 +13,6 @@ public abstract class LoadMoreScrollListener extends RecyclerView.OnScrollListen
     LinearLayoutManager layoutManager;
     RecyclerView.Adapter adapter;
 
-    int pageSize = LoadMoreUtils.PAGE_SIZE;
-
     public LoadMoreScrollListener(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         adapter = recyclerView.getAdapter();
@@ -34,16 +32,13 @@ public abstract class LoadMoreScrollListener extends RecyclerView.OnScrollListen
         }
 
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+        int pageSize = ((LoadMore) adapter).pageSize();
         if (adapter.getItemCount() >= pageSize
                 && adapter.getItemCount() - 1 == lastVisibleItemPosition) {
             if (!((LoadMore) adapter).isLoading() && !((LoadMore) adapter).loaded()) {
                 loadMore(adapter.getItemCount() / pageSize, pageSize);
             }
         }
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
     }
 
     /**

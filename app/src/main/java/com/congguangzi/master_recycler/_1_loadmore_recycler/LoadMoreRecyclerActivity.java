@@ -27,7 +27,7 @@ public class LoadMoreRecyclerActivity extends AppCompatActivity implements LoadM
     @BindView(R.id.recycler)
     RecyclerView recycleView;
 
-    ItemAdapter adapter;
+    RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class LoadMoreRecyclerActivity extends AppCompatActivity implements LoadM
         ButterKnife.bind(this);
         presenter = new LoadMorePresenter(this);
         initRecyclerView();
-        presenter.loadMore(adapter.pageSize(), 0);
+        presenter.loadMore(((LoadMore) adapter).pageSize(), 0);
     }
 
     private void initRecyclerView() {
@@ -56,7 +56,7 @@ public class LoadMoreRecyclerActivity extends AppCompatActivity implements LoadM
 
     @Override
     public void loadedMore(List<Item> set) {
-        adapter.loadMore(set);
+        ((LoadMore<Item>) adapter).loadMore(set);
     }
 
     @Override

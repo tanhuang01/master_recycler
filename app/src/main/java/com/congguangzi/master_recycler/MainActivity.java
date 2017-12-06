@@ -4,21 +4,21 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.congguangzi.master_recycler._1_loadmore_recycler.LoadMoreRecyclerActivity;
+import com.congguangzi.master_recycler._2_loadmore_recycler_with_loading.LoadMoreRecyclerWidthLoadingActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.load_more)
+    @BindView(R.id.bt_load_more)
     Button bt;
+
+    @BindView(R.id.bt_load_more_with_loading)
+    Button bt_load_more_with_loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +27,15 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.load_more)
-    void statLoadMoreRecyclerView() {
+    @OnClick(R.id.bt_load_more)
+    void startLoadMoreRecyclerActivity() {
         Intent intent = new Intent(getApplicationContext(), LoadMoreRecyclerActivity.class);
         startActivity(intent);
     }
+
+    void startLoadMoreRecyclerWithLoadingActivity() {
+        Intent intent = new Intent(getApplicationContext(), LoadMoreRecyclerWidthLoadingActivity.class);
+        startActivity(intent);
+    }
+
 }

@@ -15,7 +15,7 @@ public class LoadMorePresenter {
 
     public LoadMorePresenter(LoadMoreView view) {
         this.view = view;
-        this.loadMoreRepository = new LoadMoreRepository(view.getContext(), this);
+        this.loadMoreRepository = new LoadMoreRepository(view.getAppContext(), this);
     }
 
     public void initDataBase(List<Item> items) {

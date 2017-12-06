@@ -3,6 +3,7 @@
     package="com.congguangzi.master_recycler">
 
     <application
+        android:name=".app.MasterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,8 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name="._1_loadmore_recycler.LoadMoreRecyclerActivity" />
+        <activity android:name="._2_loadmore_recycler_with_loading.LoadMoreRecyclerWidthLoadingActivity"></activity>
     </application>
 
 </manifest>

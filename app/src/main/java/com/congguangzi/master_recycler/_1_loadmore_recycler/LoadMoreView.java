@@ -17,5 +17,5 @@ public interface LoadMoreView<T> {
      */
     void loadedMore(List<T> set);
 
-    Context getContext();
+    Context getAppContext();
 }

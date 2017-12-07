@@ -52,6 +52,7 @@ public class WithLoadingAdapter extends RecyclerView.Adapter
             if (loaded) {
                 WithLoadingViewHolderBottom viewHolderBottom = (WithLoadingViewHolderBottom) holder;
                 viewHolderBottom.progressBar.setVisibility(View.GONE);
+                viewHolderBottom.tv_loaded.setVisibility(View.VISIBLE);
             }
         } else {
             Item item = data.get(position);
@@ -125,6 +126,9 @@ public class WithLoadingAdapter extends RecyclerView.Adapter
 
         @BindView(R.id.progress)
         ProgressBar progressBar;
+
+        @BindView(R.id.tv_load)
+        TextView tv_loaded;
 
         public WithLoadingViewHolderBottom(View itemView) {
             super(itemView);

@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name="._1_loadmore_recycler.LoadMoreRecyclerActivity" />
-        <activity android:name="._2_loadmore_recycler_with_loading.LoadMoreRecyclerWidthLoadingActivity"></activity>
+        <activity android:name="._2_loadmore_with_loading.LoadMoreWithLoadingActivity"></activity>
     </application>
 
 </manifest>

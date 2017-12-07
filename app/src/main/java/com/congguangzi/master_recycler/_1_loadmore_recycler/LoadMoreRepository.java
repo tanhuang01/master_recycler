@@ -9,6 +9,7 @@ import com.congguangzi.master_recycler.db.ItemDao;
 import com.congguangzi.master_recycler.db.MasterRecyclerViewDatabase;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -82,6 +83,8 @@ class LoadMoreRepository implements baseRepository {
         Observable.create(new ObservableOnSubscribe<List<Item>>() {
             @Override
             public void subscribe(ObservableEmitter<List<Item>> e) throws Exception {
+                // 增加 1s 的延时.
+                TimeUnit.MILLISECONDS.sleep(500);
                 List<Item> items = dao.getSpecialPageItems(limit, offset);
                 e.onNext(items);
             }

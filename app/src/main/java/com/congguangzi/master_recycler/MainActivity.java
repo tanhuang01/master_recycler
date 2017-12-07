@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.congguangzi.master_recycler._1_loadmore_recycler.LoadMoreRecyclerActivity;
-import com.congguangzi.master_recycler._2_loadmore_recycler_with_loading.LoadMoreRecyclerWidthLoadingActivity;
+import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadMoreWithLoadingActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.bt_load_more_with_loading)
     void startLoadMoreRecyclerWithLoadingActivity() {
-        Intent intent = new Intent(getApplicationContext(), LoadMoreRecyclerWidthLoadingActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LoadMoreWithLoadingActivity.class);
         startActivity(intent);
     }
 

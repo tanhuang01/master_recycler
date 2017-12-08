@@ -1,7 +1,6 @@
 package com.congguangzi.master_recycler._2_loadmore_with_loading;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +9,22 @@ import android.widget.TextView;
 
 import com.congguangzi.master_recycler.R;
 import com.congguangzi.master_recycler._1_loadmore_recycler.Item;
-import com.congguangzi.master_recycler._1_loadmore_recycler.LoadMore;
 import com.congguangzi.master_recycler._1_loadmore_recycler.LoadMoreUtils;
+import com.congguangzi.master_recycler._1_loadmore_recycler.PagingLoad;
 
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * @author congguangzi (congspark@163.com) 2017/12/6.
+ * 简介:
+ *
+ * @author congguangzi (congspark@163.com) 2017/12/8.
  */
-
-public class WithLoadingAdapter extends RecyclerView.Adapter
-        implements LoadMore<Item> {
+public class LoadingAdapterOptimize extends RecyclerView.Adapter implements PagingLoad<Item> {
 
     private static final String TAG = "Loading";
     private boolean loading;
@@ -33,15 +33,21 @@ public class WithLoadingAdapter extends RecyclerView.Adapter
     private final int TYPE_ITEM = 0x01;
     private final int TYPE_BOTTOM = 0x02;
 
-    private List<Item> data = new ArrayList<>();
+    private RecyclerView.Adapter adapter;
+
+    public LoadingAdapterOptimize(RecyclerView.Adapter adapter) {
+        if (adapter == null || !(adapter instanceof LoadMore)) {
+            throw new RuntimeException("the parameter adapter should not be NULL and must implement LoadMore<T>");
+        }
+        this.adapter = adapter;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-            return new WithLoadingViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout._1_load_more_item, parent, false));
+            return adapter.onCreateViewHolder(parent, viewType);
         } else {
-            return new WithLoadingViewHolderBottom(LayoutInflater.from(parent.getContext())
+            return new LoadingViewHolderBottom(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout._2_load_more_bottom, parent, false));
         }
     }
@@ -50,41 +56,38 @@ public class WithLoadingAdapter extends RecyclerView.Adapter
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_BOTTOM) {
             if (loaded) {
-                WithLoadingViewHolderBottom viewHolderBottom = (WithLoadingViewHolderBottom) holder;
-                viewHolderBottom.progressBar.setVisibility(View.GONE);
-                viewHolderBottom.tv_loaded.setVisibility(View.VISIBLE);
+                LoadingViewHolderBottom viewHolder = (LoadingViewHolderBottom) holder;
+                viewHolder.progressBar.setVisibility(View.GONE);
+                viewHolder.tv_loaded.setVisibility(View.VISIBLE);
             }
         } else {
-            Item item = data.get(position);
-            WithLoadingViewHolder viewHolder = (WithLoadingViewHolder) holder;
-            viewHolder.title.setText(item.getTitle());
-            viewHolder.detail.setText(item.getDetail());
+            adapter.onBindViewHolder(holder, position);
         }
     }
 
     @Override
     public int getItemCount() {
-        if (data == null) {
-            return 0;
-        }
-        return data.size() < pageSize() ? data.size() : data.size() + 1;
+        return adapter.getItemCount() < pageSize() ? adapter.getItemCount() : adapter.getItemCount() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (data == null || data.size() > position) {
-            return TYPE_ITEM;
-        } else {
+        if (position > 0 && position == adapter.getItemCount()) {
             return TYPE_BOTTOM;
+        } else {
+            return TYPE_ITEM;
         }
     }
 
     @Override
-    public void loadMore(List<Item> set) {
-        data.addAll(set);
-        notifyDataSetChanged();
+    public void loadMore(@NotNull List<Item> set) {
+        if (set.size() > 0) {
+            ((LoadMore) adapter).append(set);
+            notifyItemRangeInserted(adapter.getItemCount() - set.size(), set.size());
+        }
         if (set.size() < pageSize()) {
             loaded = true;
+            notifyItemChanged(adapter.getItemCount());
         }
         loading = false;
     }
@@ -109,20 +112,7 @@ public class WithLoadingAdapter extends RecyclerView.Adapter
         return LoadMoreUtils.PAGE_SIZE;
     }
 
-    static class WithLoadingViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_title)
-        TextView title;
-
-        @BindView(R.id.item_detail)
-        TextView detail;
-
-        WithLoadingViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    static class WithLoadingViewHolderBottom extends RecyclerView.ViewHolder {
+    static class LoadingViewHolderBottom extends RecyclerView.ViewHolder {
 
         @BindView(R.id.progress)
         ProgressBar progressBar;
@@ -130,10 +120,9 @@ public class WithLoadingAdapter extends RecyclerView.Adapter
         @BindView(R.id.tv_load)
         TextView tv_loaded;
 
-        public WithLoadingViewHolderBottom(View itemView) {
+        public LoadingViewHolderBottom(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-
 }

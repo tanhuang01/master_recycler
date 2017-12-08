@@ -16,8 +16,8 @@ public abstract class LoadMoreScrollListener extends RecyclerView.OnScrollListen
     public LoadMoreScrollListener(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         adapter = recyclerView.getAdapter();
-        if (!(adapter instanceof LoadMore)) {
-            throw new RuntimeException("the adapter of the RecyclerView should implement the LoadMore interface");
+        if (!(adapter instanceof PagingLoad)) {
+            throw new RuntimeException("the adapter of the RecyclerView should implement the PagingLoad interface");
         }
     }
 
@@ -32,10 +32,10 @@ public abstract class LoadMoreScrollListener extends RecyclerView.OnScrollListen
         }
 
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-        int pageSize = ((LoadMore) adapter).pageSize();
+        int pageSize = ((PagingLoad) adapter).pageSize();
         if (adapter.getItemCount() >= pageSize
                 && adapter.getItemCount() - 1 == lastVisibleItemPosition) {
-            if (!((LoadMore) adapter).isLoading() && !((LoadMore) adapter).loaded()) {
+            if (!((PagingLoad) adapter).isLoading() && !((PagingLoad) adapter).loaded()) {
                 loadMore(adapter.getItemCount() / pageSize, pageSize);
             }
         }

@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * @author congguangzi (congspark@163.com) 2017/11/23.
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder>
-        implements LoadMore<Item> {
+        implements PagingLoad<Item> {
 
     // 是否正在分页加载.
     private boolean loading;

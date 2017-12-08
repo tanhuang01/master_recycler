@@ -39,7 +39,7 @@ public class LoadMoreRecyclerActivity extends BaseActivity implements LoadMoreVi
         setContentView(R.layout._1_load_more_recycler_layout);
         ButterKnife.bind(this);
         initRecyclerView();
-        presenter.loadMore(((LoadMore) adapter).pageSize(), 0);
+        presenter.loadMore(((PagingLoad) adapter).pageSize(), 0);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class LoadMoreRecyclerActivity extends BaseActivity implements LoadMoreVi
             @Override
             public void loadMore(int page, int count) {
                 Toast.makeText(LoadMoreRecyclerActivity.this.getAppContext(), "load " + (page + 1), Toast.LENGTH_SHORT).show();
-                ((LoadMore) adapter).setLoading(true);
+                ((PagingLoad) adapter).setLoading(true);
                 presenter.loadMore(count, count * page);
             }
         });
@@ -68,7 +68,7 @@ public class LoadMoreRecyclerActivity extends BaseActivity implements LoadMoreVi
 
     @Override
     public void loadedMore(List<Item> set) {
-        ((LoadMore<Item>) adapter).loadMore(set);
+        ((PagingLoad<Item>) adapter).loadMore(set);
     }
 
     @Override

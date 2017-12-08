@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author congguangzi (congspark@163.com) 2017/11/23.
  */
-public interface LoadMore<T> {
+public interface PagingLoad<T> {
 
     /**
      * 加载完成更多数据时. 回调此方法.

@@ -1,8 +1,7 @@
-package com.congguangzi.master_recycler._1_loadmore_recycler;
+package com.congguangzi.master_recycler._1_loadmore;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.congguangzi.master_recycler.baseRepository;
 import com.congguangzi.master_recycler.db.ItemDao;
@@ -25,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author congguangzi (congspark@163.com) 2017/11/22.
  */
-class LoadMoreRepository implements baseRepository {
+class LoadMoreRepository_1 implements baseRepository {
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -33,9 +32,9 @@ class LoadMoreRepository implements baseRepository {
 
     ItemDao dao;
 
-    LoadMorePresenter presenter;
+    LoadMorePresenter_1 presenter;
 
-    LoadMoreRepository(Context context, LoadMorePresenter presenter) {
+    LoadMoreRepository_1(Context context, LoadMorePresenter_1 presenter) {
         this.presenter = presenter;
         this.database = MasterRecyclerViewDatabase.getInstance(context);
         dao = database.getItemDao();
@@ -46,7 +45,7 @@ class LoadMoreRepository implements baseRepository {
      *
      * @param items
      */
-    void initDataBase(final List<Item> items) {
+    void initDataBase(final List<Item_1> items) {
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
@@ -80,24 +79,24 @@ class LoadMoreRepository implements baseRepository {
     }
 
     void loadMoreItem(final int limit, final int offset) {
-        Observable.create(new ObservableOnSubscribe<List<Item>>() {
+        Observable.create(new ObservableOnSubscribe<List<Item_1>>() {
             @Override
-            public void subscribe(ObservableEmitter<List<Item>> e) throws Exception {
+            public void subscribe(ObservableEmitter<List<Item_1>> e) throws Exception {
                 // 增加 1s 的延时.
                 TimeUnit.MILLISECONDS.sleep(500);
-                List<Item> items = dao.getSpecialPageItems(limit, offset);
+                List<Item_1> items = dao.getSpecialPageItems(limit, offset);
                 e.onNext(items);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Item>>() {
+                .subscribe(new Observer<List<Item_1>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         compositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(List<Item> items) {
+                    public void onNext(List<Item_1> items) {
                         presenter.loadedMore(items);
                         Log.w("db", "item size: " + items.size());
                     }

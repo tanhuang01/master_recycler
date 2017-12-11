@@ -1,4 +1,4 @@
-package com.congguangzi.master_recycler._1_loadmore_recycler;
+package com.congguangzi.master_recycler._1_loadmore;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author congguangzi (congspark@163.com) 2017/11/23.
  */
-public interface PagingLoad<T> {
+public interface PagingLoad_1<T> {
 
     /**
      * 加载完成更多数据时. 回调此方法.

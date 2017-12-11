@@ -1,4 +1,4 @@
-package com.congguangzi.master_recycler._1_loadmore_recycler;
+package com.congguangzi.master_recycler._1_loadmore;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,8 +19,8 @@ import butterknife.ButterKnife;
  *
  * @author congguangzi (congspark@163.com) 2017/11/23.
  */
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder>
-        implements PagingLoad<Item> {
+public class ItemAdapter_1 extends RecyclerView.Adapter<ItemAdapter_1.ItemViewHolder>
+        implements PagingLoad_1<Item_1> {
 
     // 是否正在分页加载.
     private boolean loading;
@@ -28,7 +28,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     // 是否全部加载完成.
     private boolean loaded;
 
-    private List<Item> dataList = new ArrayList<>();
+    private List<Item_1> dataList = new ArrayList<>();
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,7 +39,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Item item = dataList.get(position);
+        Item_1 item = dataList.get(position);
         holder.title.setText(item.getTitle());
         holder.detail.setText(item.getDetail());
     }
@@ -50,7 +50,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     @Override
-    public void loadMore(List<Item> set) {
+    public void loadMore(List<Item_1> set) {
         dataList.addAll(set);
         notifyItemRangeInserted(dataList.size() - set.size(), set.size());
         if (set.size() < pageSize()) {
@@ -71,7 +71,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public int pageSize() {
-        return LoadMoreUtils.PAGE_SIZE;
+        return LoadMoreUtils_1.PAGE_SIZE;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         this.loading = loading;
     }
 
-    public void setDataList(List<Item> dataList) {
+    public void setDataList(List<Item_1> dataList) {
         this.dataList = dataList;
         notifyDataSetChanged();
     }

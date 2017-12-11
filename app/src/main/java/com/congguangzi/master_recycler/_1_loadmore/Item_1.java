@@ -1,4 +1,4 @@
-package com.congguangzi.master_recycler._1_loadmore_recycler;
+package com.congguangzi.master_recycler._1_loadmore;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -7,18 +7,18 @@ import android.arch.persistence.room.PrimaryKey;
  * @author congguangzi (congspark@163.com) 2017/11/21.
  */
 @Entity(tableName = "item")
-public class Item {
+public class Item_1 {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String title;
     private String detail;
 
-    public Item(String title, String detail) {
+    public Item_1(String title, String detail) {
         this.title = title;
         this.detail = detail;
     }
 
-    private Item(Builder builder) {
+    private Item_1(Builder builder) {
         id = builder.id;
         title = builder.title;
         detail = builder.detail;
@@ -75,8 +75,8 @@ public class Item {
             return this;
         }
 
-        public Item build(Builder builder) {
-            return new Item(builder);
+        public Item_1 build(Builder builder) {
+            return new Item_1(builder);
         }
     }
 }

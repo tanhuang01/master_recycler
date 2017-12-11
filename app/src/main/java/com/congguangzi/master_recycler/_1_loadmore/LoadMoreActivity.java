@@ -1,4 +1,4 @@
-package com.congguangzi.master_recycler._1_loadmore_recycler;
+package com.congguangzi.master_recycler._1_loadmore;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,10 +23,10 @@ import butterknife.ButterKnife;
  *
  * @author congguangzi (congspark@163.com) 2017/11/21.
  */
-public class LoadMoreRecyclerActivity extends BaseActivity implements LoadMoreView<Item> {
+public class LoadMoreActivity extends BaseActivity implements LoadMoreView_1<Item_1> {
 
     @Inject
-    LoadMorePresenter presenter;
+    LoadMorePresenter_1 presenter;
 
     @BindView(R.id.recycler)
     RecyclerView recycleView;
@@ -39,12 +39,12 @@ public class LoadMoreRecyclerActivity extends BaseActivity implements LoadMoreVi
         setContentView(R.layout._1_load_more_recycler_layout);
         ButterKnife.bind(this);
         initRecyclerView();
-        presenter.loadMore(((PagingLoad) adapter).pageSize(), 0);
+        presenter.loadMore(((PagingLoad_1) adapter).pageSize(), 0);
     }
 
     @Override
     protected void inject(MasterApplicationComponent appComponent) {
-        DaggerLoadMoreRecyclerComponent.builder()
+        DaggerLoadMoreComponent.builder()
                 .masterComponent(appComponent)
                 .bindActivity(this)
                 .build()
@@ -52,14 +52,14 @@ public class LoadMoreRecyclerActivity extends BaseActivity implements LoadMoreVi
     }
 
     private void initRecyclerView() {
-        adapter = new ItemAdapter();
+        adapter = new ItemAdapter_1();
         recycleView.setLayoutManager(new LinearLayoutManager(getAppContext()));
         recycleView.setAdapter(adapter);
-        recycleView.addOnScrollListener(new LoadMoreScrollListener(recycleView) {
+        recycleView.addOnScrollListener(new LoadMoreScrollListener_1(recycleView) {
             @Override
             public void loadMore(int page, int count) {
-                Toast.makeText(LoadMoreRecyclerActivity.this.getAppContext(), "load " + (page + 1), Toast.LENGTH_SHORT).show();
-                ((PagingLoad) adapter).setLoading(true);
+                Toast.makeText(LoadMoreActivity.this.getAppContext(), "load " + (page + 1), Toast.LENGTH_SHORT).show();
+                ((PagingLoad_1) adapter).setLoading(true);
                 presenter.loadMore(count, count * page);
             }
         });
@@ -67,8 +67,8 @@ public class LoadMoreRecyclerActivity extends BaseActivity implements LoadMoreVi
 
 
     @Override
-    public void loadedMore(List<Item> set) {
-        ((PagingLoad<Item>) adapter).loadMore(set);
+    public void loadedMore(List<Item_1> set) {
+        ((PagingLoad_1<Item_1>) adapter).loadMore(set);
     }
 
     @Override

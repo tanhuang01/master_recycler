@@ -17,8 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="._1_loadmore_recycler.LoadMoreRecyclerActivity" />
-        <activity android:name="._2_loadmore_with_loading.LoadMoreWithLoadingActivity"></activity>
+        <activity android:name="._1_loadmore.LoadMoreActivity" />
+        <activity android:name="._2_loadmore_with_loading.LoadMoreWithLoadingActivity" />
+        <activity android:name="._3_loadmore_grid_with_loading.LoadMoreGridActivity"></activity>
     </application>
 
 </manifest>

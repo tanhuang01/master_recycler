@@ -8,9 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.congguangzi.master_recycler.R;
-import com.congguangzi.master_recycler._1_loadmore_recycler.Item;
-import com.congguangzi.master_recycler._1_loadmore_recycler.LoadMoreUtils;
-import com.congguangzi.master_recycler._1_loadmore_recycler.PagingLoad;
+import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
+import com.congguangzi.master_recycler._1_loadmore.PagingLoad_1;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
  *
  * @author congguangzi (congspark@163.com) 2017/12/8.
  */
-public class LoadingAdapterOptimize extends RecyclerView.Adapter implements PagingLoad<Item> {
+public class LoadingAdapterOptimize_2 extends RecyclerView.Adapter implements PagingLoad_1 {
 
     private static final String TAG = "Loading";
     private boolean loading;
@@ -35,9 +34,9 @@ public class LoadingAdapterOptimize extends RecyclerView.Adapter implements Pagi
 
     private RecyclerView.Adapter adapter;
 
-    public LoadingAdapterOptimize(RecyclerView.Adapter adapter) {
-        if (adapter == null || !(adapter instanceof LoadMore)) {
-            throw new RuntimeException("the parameter adapter should not be NULL and must implement LoadMore<T>");
+    public LoadingAdapterOptimize_2(RecyclerView.Adapter adapter) {
+        if (adapter == null || !(adapter instanceof LoadMore_2)) {
+            throw new RuntimeException("the parameter adapter should not be NULL and must implement LoadMore_2<T>");
         }
         this.adapter = adapter;
     }
@@ -80,9 +79,9 @@ public class LoadingAdapterOptimize extends RecyclerView.Adapter implements Pagi
     }
 
     @Override
-    public void loadMore(@NotNull List<Item> set) {
+    public void loadMore(@NotNull List set) {
         if (set.size() > 0) {
-            ((LoadMore) adapter).append(set);
+            ((LoadMore_2) adapter).append(set);
             notifyItemRangeInserted(adapter.getItemCount() - set.size(), set.size());
         }
         if (set.size() < pageSize()) {
@@ -109,7 +108,7 @@ public class LoadingAdapterOptimize extends RecyclerView.Adapter implements Pagi
 
     @Override
     public int pageSize() {
-        return LoadMoreUtils.PAGE_SIZE;
+        return LoadMoreUtils_1.PAGE_SIZE;
     }
 
     static class LoadingViewHolderBottom extends RecyclerView.ViewHolder {

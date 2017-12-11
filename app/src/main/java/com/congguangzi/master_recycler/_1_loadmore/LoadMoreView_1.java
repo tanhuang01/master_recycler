@@ -1,4 +1,4 @@
-package com.congguangzi.master_recycler._1_loadmore_recycler;
+package com.congguangzi.master_recycler._1_loadmore;
 
 import android.content.Context;
 
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author congguangzi (congspark@163.com) 2017/11/23.
  */
-public interface LoadMoreView<T> {
+public interface LoadMoreView_1<T> {
     /**
      * 加载更多后返回的数据.
      *

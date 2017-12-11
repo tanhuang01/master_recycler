@@ -11,8 +11,8 @@ import com.congguangzi.master_recycler.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import com.congguangzi.master_recycler._1_loadmore_recycler.Item;
-import com.congguangzi.master_recycler._2_loadmore_with_loading.NormalAdapter.WithLoadingViewHolder;
+import com.congguangzi.master_recycler._1_loadmore.Item_1;
+import com.congguangzi.master_recycler._2_loadmore_with_loading.NormalAdapter_2.WithLoadingViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -23,9 +23,9 @@ import java.util.List;
  * @author congguangzi (congspark@163.com) 2017/12/8.
  */
 
-public class NormalAdapter extends RecyclerView.Adapter<WithLoadingViewHolder> implements LoadMore<Item> {
+public class NormalAdapter_2 extends RecyclerView.Adapter<WithLoadingViewHolder> implements LoadMore_2<Item_1> {
 
-    private List<Item> data = new ArrayList<>();
+    private List<Item_1> data = new ArrayList<>();
 
     @Override
     public WithLoadingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,7 +35,7 @@ public class NormalAdapter extends RecyclerView.Adapter<WithLoadingViewHolder> i
 
     @Override
     public void onBindViewHolder(WithLoadingViewHolder holder, int position) {
-        Item item = data.get(position);
+        Item_1 item = data.get(position);
         holder.title.setText(item.getTitle());
         holder.detail.setText(item.getDetail());
     }
@@ -46,7 +46,7 @@ public class NormalAdapter extends RecyclerView.Adapter<WithLoadingViewHolder> i
     }
 
     @Override
-    public void append(@NotNull List<Item> set) {
+    public void append(@NotNull List<Item_1> set) {
         data.addAll(set);
     }
 

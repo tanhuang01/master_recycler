@@ -7,10 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.congguangzi.master_recycler.R;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 import com.congguangzi.master_recycler._1_loadmore.Item_1;
 import com.congguangzi.master_recycler._2_loadmore_with_loading.NormalAdapter_2.WithLoadingViewHolder;
 
@@ -18,6 +14,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author congguangzi (congspark@163.com) 2017/12/8.

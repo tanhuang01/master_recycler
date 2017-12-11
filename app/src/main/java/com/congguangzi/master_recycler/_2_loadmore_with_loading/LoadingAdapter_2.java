@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.congguangzi.master_recycler.R;
 import com.congguangzi.master_recycler._1_loadmore.Item_1;
-import com.congguangzi.master_recycler._1_loadmore.PagingLoad_1;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
+import com.congguangzi.master_recycler._1_loadmore.PagingLoad_1;
 
 import java.util.ArrayList;
 import java.util.List;

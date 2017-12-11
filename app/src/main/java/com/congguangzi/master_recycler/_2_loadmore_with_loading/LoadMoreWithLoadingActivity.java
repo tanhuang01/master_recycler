@@ -10,9 +10,9 @@ import android.widget.Toast;
 import com.congguangzi.master_recycler.BaseActivity;
 import com.congguangzi.master_recycler.R;
 import com.congguangzi.master_recycler._1_loadmore.Item_1;
-import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
 import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter_1;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreScrollListener_1;
+import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreView_1;
 import com.congguangzi.master_recycler.app.MasterApplicationComponent;
 

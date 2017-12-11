@@ -1,7 +1,6 @@
 package com.congguangzi.master_recycler._3_loadmore_grid_with_loading;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,7 +15,6 @@ import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter_1;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreScrollListener_1;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreView_1;
-import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadMoreWithLoadingActivity;
 import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadingAdapterOptimize_2;
 import com.congguangzi.master_recycler._2_loadmore_with_loading.NormalAdapter_2;
 import com.congguangzi.master_recycler.app.MasterApplicationComponent;

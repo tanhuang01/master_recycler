@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreActivity;
 import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadMoreWithLoadingActivity;
 import com.congguangzi.master_recycler._3_loadmore_grid_with_loading.LoadMoreGridActivity;
+import com.congguangzi.master_recycler._4_only_loadmore_recycler.OnlyRecyclerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.bt_load_more_grid)
     Button bt_grid_loading;
+
+    @BindView(R.id.bt_only_page_recycler)
+    Button bt_only_recycler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.bt_load_more_grid)
     void startLoadMoreGridActivity() {
         Intent intent = new Intent(getApplicationContext(), LoadMoreGridActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_only_page_recycler)
+    void startOnlyPageActivity() {
+        Intent intent = new Intent(getApplicationContext(), OnlyRecyclerActivity.class);
         startActivity(intent);
     }
 

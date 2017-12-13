@@ -24,14 +24,76 @@ import butterknife.ButterKnife;
 /**
  * 简介: 分页加载 RecyclerView
  * <p>
- * 使用代理的方式为 adapter 提供分页加载的功能.
- * </p>
+ * 使用代理的方式为 adapter 提供分页加载的功能. 支持 {@link LinearLayoutManager} 和 {@link GridLayoutManager}.
+ * <p>
+ * 最大限度的解除分页功能, 与 RecyclerView 基本显示功能的耦合, 并且尽量少的暴露无关代码
+ * <p>
+ * <b>使用方式: 以 MVP 为例, MVVM 类似</b>
+ * <p>
+ * 1. 初始化 {@link PageRecyclerView}. 常规的 {@link RecyclerView} 初始化操作.
+ * <pre>
+ * void initRecyclerView() {
+ *      adapter = new NormalAdapter_4();
+ *      GridLayoutManager gridLayoutManager = new GridLayoutManager(getAppContext(), 2, LinearLayoutManager.VERTICAL, false);
+ *      recycler.setLayoutManager(gridLayoutManager);
+ *      DividerItemDecoration itemDecoration = new DividerItemDecoration(getAppContext(), DividerItemDecoration.VERTICAL);
+ *      recycler.addItemDecoration(itemDecoration);
+ * }
+ * </pre>
+ * <p>
+ * 2.设置 Adapter. 设置 Adapter 时需要制定每一页的加载的个数, 最小为 5 个. <b>如果小于 5 个, 则不做分页处理.</b>
+ * <pre>
+ * void initRecyclerView() {
+ *     ...
+ *     // 第二个参数需要大于 5
+ *     recycler.setAdapter(adapter, 10);
+ * }
+ * </pre>
+ * <p>
+ * 3. 设置监听. 分页加载的过程中作何操作, 可以使读取数据库, 也可以是访问网络.
+ * <pre>
+ * void initRecyclerView() {
+ *     ...
+ *     // 访问数据库, 加载下一页
+ *     recycler.addOnScrollListener(new PageRecyclerView.LoadMoreScrollListener() {
+ *         {@literal @}Override
+ *          public void loadMore(int page, int pageSize) {
+ *               // 这里是 mvp 模式, mvvm 类似, 只不过使用的是 viewModel.
+ *               // 从数据库中或网络上加载下一页数据.
+ *               presenter.loadMore(pageSize, pageSize * page);
+ *          }
+ *     });
+ * }
+ * </pre>
+ * <p>
+ * 4. 在加载加载完成后向 {@link PageRecyclerView} 中追加数据.<br>
+ * <b><font color="red">NOTE:</font></b> 不需要调用 {@link android.support.v7.widget.RecyclerView.Adapter}
+ * 的 {@link Adapter#notifyDataSetChanged()} 相关方法, {@link PageRecyclerView} 会自动帮你调用.
+ * <p>
+ * <pre>
+ * {@literal @}Override
+ *  public void loadedMore(List<Item_1> set) {
+ *     recycler.appendData(set);
+ * }
+ * </pre>
+ * <p>
+ * 5. 手动调用加载第一页的数据.<br>
+ * <b><font color="red">NOTE:</font></b> 第一页的数据大小, 需要与设置 adapter 时, 指定的大小相同. 否则会出现异常.
+ * <pre>
+ * {@literal @}Override
+ *  protected void onCreate(Bundle savedInstanceState) {
+ *     initRecyclerView();
+ *     presenter.loadMore(recycler.pageSize(), 0);
+ * }
+ * </pre>
  *
  * @author congguangzi (congspark@163.com) 2017/12/12.
  */
 public class PageRecyclerView extends RecyclerView {
 
-    PageAdapter pageAdapter;
+    protected PageAdapter pageAdapter;
+
+    private int pageSize = 0;
 
     public PageRecyclerView(Context context) {
         this(context, null);
@@ -63,6 +125,7 @@ public class PageRecyclerView extends RecyclerView {
             setAdapter(adapter);
         } else {
             pageAdapter = new PageAdapter(adapter, pageSize);
+            this.pageSize = pageSize;
             setAdapter(pageAdapter);
         }
     }
@@ -74,11 +137,17 @@ public class PageRecyclerView extends RecyclerView {
         pageAdapter.loadMore(set);
     }
 
+    /**
+     * @return 每一页的数量.
+     */
+    public int pageSize() {
+        return pageAdapter.pageSize();
+    }
 
     /**
      * 简介: 分页加载 adapter.
      * <p>
-     * 代理 adapter, 为原有的 adapter 增加分页的功能.
+     * 代理 adapter, 持有原始的 adapter 的引用, 为原有的 adapter 增加分页的功能.
      * </p>
      */
     static class PageAdapter extends Adapter<ViewHolder> {

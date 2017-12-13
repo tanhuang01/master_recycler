@@ -52,7 +52,7 @@ public class OnlyRecyclerActivity extends BaseActivity implements LoadMoreView_1
         setContentView(R.layout._4_activity_only_recycler);
         ButterKnife.bind(this);
         initRecyclerView();
-        presenter.loadMore(LoadMoreUtils_1.PAGE_SIZE, 0);
+        presenter.loadMore(recycler.pageSize(), 0);
     }
 
     private void initRecyclerView() {
@@ -63,7 +63,6 @@ public class OnlyRecyclerActivity extends BaseActivity implements LoadMoreView_1
         recycler.addItemDecoration(itemDecoration);
         recycler.setAdapter(adapter, LoadMoreUtils_1.PAGE_SIZE);
         recycler.addOnScrollListener(new PageRecyclerView.LoadMoreScrollListener() {
-
             @Override
             public void loadMore(int page, int pageSize) {
                 Toast.makeText(OnlyRecyclerActivity.this.getAppContext(), "loading " + (page + 1), Toast.LENGTH_SHORT).show();
@@ -72,7 +71,6 @@ public class OnlyRecyclerActivity extends BaseActivity implements LoadMoreView_1
         });
 
     }
-
 
     @Override
     public void loadedMore(List<Item_1> set) {

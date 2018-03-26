@@ -14,12 +14,10 @@ import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadingAdapterOp
 
 public abstract class LoadMoreScrollListener_3 extends RecyclerView.OnScrollListener {
 
-    RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     RecyclerView.Adapter adapter;
 
     public LoadMoreScrollListener_3(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
         adapter = recyclerView.getAdapter();
         if (!(adapter instanceof PagingLoad_1)) {
             throw new RuntimeException("the adapter of the Page-RecyclerView should implement the PagingLoad_1 interface");
@@ -42,19 +40,19 @@ public abstract class LoadMoreScrollListener_3 extends RecyclerView.OnScrollList
         // 网格布局最后一行占整个布局.
         // 也是考虑到动态切换 LayoutManager .
         // 所以滑动时获取 spanSize.
-        if (layoutManager instanceof GridLayoutManager &&
-                ((GridLayoutManager) layoutManager).getSpanSizeLookup() instanceof DefaultSpanSizeLookup) {
-            ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    if (position == adapter.getItemCount() - 1) {
-                        return ((GridLayoutManager) layoutManager).getSpanCount();
-                    } else {
-                        return 1;
-                    }
-                }
-            });
-        }
+//        if (layoutManager instanceof GridLayoutManager &&
+//                ((GridLayoutManager) layoutManager).getSpanSizeLookup() instanceof DefaultSpanSizeLookup) {
+//            ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//                @Override
+//                public int getSpanSize(int position) {
+//                    if (position == adapter.getItemCount() - 1) {
+//                        return ((GridLayoutManager) layoutManager).getSpanCount();
+//                    } else {
+//                        return 1;
+//                    }
+//                }
+//            });
+//        }
 
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
         int pageSize = ((PagingLoad_1) adapter).pageSize();

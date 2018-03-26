@@ -23,6 +23,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 分页加载 Recycler-View.
+ *
+ * 添加了一个 Loading 圈, 分页加载时显示. 并且对 adapter 进行优化, 提取出 Loading 圈的相关业务逻辑, 封装到一个 Proxy-Adapter 中
+ * 使得分页操作更加的灵活.
+ *
+ * @author congguangzi (congspark@163.com) 2017/11/21.
+ */
 public class LoadMoreWithLoadingActivity extends BaseActivity implements LoadMoreView_1<Item_1> {
 
     @Inject

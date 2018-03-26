@@ -20,6 +20,9 @@ import butterknife.ButterKnife;
 
 /**
  * 简介: 滑动到底端加载更多 recyclerView
+ * <p>
+ * 最基本的 Recycler-View 分页加载效果, 每当滑动到最底端时, 去加载下一页的数据,
+ * 下一页的数据直接添加到 adapter 的数据集合中, 然后更新
  *
  * @author congguangzi (congspark@163.com) 2017/11/21.
  */

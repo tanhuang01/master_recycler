@@ -27,6 +27,15 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 分页加载 Recycler-View
+ *
+ * 带有 Loading 圈, 并且对 Adapter 做了优化. (通过 Proxy-adapter 的方式提取出分页的相关逻辑)
+ *
+ * 将对 RecyclerView 的时间监听移动到 RecyclerView 中.
+ *
+ * @author congguangzi (congspark@163.com) 2017/11/21.
+ */
 public class OnlyRecyclerActivity extends BaseActivity implements LoadMoreView_1<Item_1> {
 
     @BindView(R.id.recycler)

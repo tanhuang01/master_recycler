@@ -2,6 +2,7 @@ package com.congguangzi.master_recycler._3_loadmore_grid_with_loading;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+/**
+ * 多列 Recycler-View 分页加载.
+ * <p>
+ * 带有 Loading 圈, 并且对 Adapter 做了优化. (通过 Proxy-adapter 的方式提取出分页的相关逻辑)
+ *
+ * @author congguangzi (congspark@163.com) 2017/11/21.
+ */
 public class LoadMoreGridActivity extends BaseActivity implements LoadMoreView_1<Item_1> {
 
     @BindView(R.id.recycler)
@@ -58,6 +67,16 @@ public class LoadMoreGridActivity extends BaseActivity implements LoadMoreView_1
         adapter = new NormalAdapter_2();
         proxyAdapter = new LoadingAdapterOptimize_2(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getAppContext(), 2, LinearLayoutManager.VERTICAL, false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position == proxyAdapter.getItemCount() - 1) {
+                    return 2; // the span count
+                } else {
+                    return 1;
+                }
+            }
+        });
         recycler.setLayoutManager(gridLayoutManager);
         recycler.setAdapter(proxyAdapter);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getAppContext(), DividerItemDecoration.VERTICAL);

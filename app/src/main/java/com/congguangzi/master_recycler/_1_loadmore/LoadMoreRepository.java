@@ -26,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 class LoadMoreRepository implements baseRepository {
 
+
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     MasterRecyclerViewDatabase database;
@@ -79,11 +80,23 @@ class LoadMoreRepository implements baseRepository {
     }
 
     void loadMoreItem(final int offset, final int limit) {
+        // 默认添加 800 ms 的延时.
+        loadMoreItem(offset, limit, 800);
+    }
+
+    /**
+     * @param offset
+     * @param limit
+     * @param delay
+     */
+    void loadMoreItem(final int offset, final int limit, final int delay) {
         Observable.create(new ObservableOnSubscribe<List<Item>>() {
             @Override
             public void subscribe(ObservableEmitter<List<Item>> e) throws Exception {
                 // 增加 1s 的延时.
-                TimeUnit.MILLISECONDS.sleep(500);
+                if (delay > 0) {
+                    TimeUnit.MILLISECONDS.sleep(delay);
+                }
                 List<Item> items = dao.getSpecialPageItems(offset, limit);
                 e.onNext(items);
             }

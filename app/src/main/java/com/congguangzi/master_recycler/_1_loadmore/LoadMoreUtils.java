@@ -12,6 +12,7 @@ public class LoadMoreUtils {
 
     public static final int PAGE_SIZE = 8;
 
+
     public static List<Item> generateSet() {
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < 30; i++) {

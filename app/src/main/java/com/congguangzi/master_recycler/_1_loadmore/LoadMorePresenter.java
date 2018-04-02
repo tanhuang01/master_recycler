@@ -33,6 +33,16 @@ public class LoadMorePresenter {
     }
 
     /**
+     *
+     * @param offset
+     * @param limit
+     * @param delay 加载延迟时间
+     */
+    public void loadMore(int offset, int limit, int delay) {
+        loadMoreRepository.loadMoreItem(offset, limit, delay);
+    }
+
+    /**
      * 加载完成
      *
      * @param set

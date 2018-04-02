@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.congguangzi.master_recycler.BaseActivity;
 import com.congguangzi.master_recycler.R;
-import com.congguangzi.master_recycler.app.MasterApplicationComponent;
+import com.congguangzi.master_recycler.app.RecyclerAppComponent;
 
 import java.util.List;
 
@@ -26,10 +26,10 @@ import butterknife.ButterKnife;
  *
  * @author congguangzi (congspark@163.com) 2017/11/21.
  */
-public class LoadMoreActivity extends BaseActivity implements LoadMoreView_1<Item_1> {
+public class LoadMoreActivity extends BaseActivity implements LoadMoreView<Item> {
 
     @Inject
-    LoadMorePresenter_1 presenter;
+    LoadMorePresenter presenter;
 
     @BindView(R.id.recycler)
     RecyclerView recycleView;
@@ -46,7 +46,7 @@ public class LoadMoreActivity extends BaseActivity implements LoadMoreView_1<Ite
     }
 
     @Override
-    protected void inject(MasterApplicationComponent appComponent) {
+    protected void inject(RecyclerAppComponent appComponent) {
         DaggerLoadMoreComponent.builder()
                 .masterComponent(appComponent)
                 .bindActivity(this)
@@ -63,15 +63,16 @@ public class LoadMoreActivity extends BaseActivity implements LoadMoreView_1<Ite
             public void loadMore(int page, int count) {
                 Toast.makeText(LoadMoreActivity.this.getAppContext(), "load " + (page + 1), Toast.LENGTH_SHORT).show();
                 ((PagingLoad_1) adapter).setLoading(true);
-                presenter.loadMore(count, count * page);
+                presenter.loadMore(count * page, count);
             }
         });
+        presenter.loadMore(0, 7);
     }
 
 
     @Override
-    public void loadedMore(List<Item_1> set) {
-        ((PagingLoad_1<Item_1>) adapter).loadMore(set);
+    public void loadedMore(List<Item> set) {
+        ((PagingLoad_1<Item>) adapter).loadMore(set);
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.congguangzi.master_recycler.BuildConfig;
-import com.congguangzi.master_recycler._1_loadmore.Item_1;
+import com.congguangzi.master_recycler._1_loadmore.Item;
 
 /**
  * 数据库访问控制类.
@@ -14,7 +14,7 @@ import com.congguangzi.master_recycler._1_loadmore.Item_1;
  * @author congguangzi (congspark@163.com) 2017/11/21.
  */
 @Database(entities = {
-        Item_1.class
+        Item.class
 }, version = 1, exportSchema = false)
 public abstract class MasterRecyclerViewDatabase extends RoomDatabase {
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <id name="key_listener">key_listener</id>
+    <id name="key_position">key_position</id>
+    <id name="key_object">key_obj</id>
+</resources>

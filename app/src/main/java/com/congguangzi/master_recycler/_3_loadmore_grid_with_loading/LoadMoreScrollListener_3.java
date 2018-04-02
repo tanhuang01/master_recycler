@@ -1,7 +1,5 @@
 package com.congguangzi.master_recycler._3_loadmore_grid_with_loading;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.GridLayoutManager.DefaultSpanSizeLookup;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -9,9 +7,13 @@ import com.congguangzi.master_recycler._1_loadmore.PagingLoad_1;
 import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadingAdapterOptimize_2;
 
 /**
+ * 简介: RecyclerView 的滑动监听. 当最后一个 item 展示在屏幕上时, 回调加载下一页的方法.
+ *
+ * 回调参数为 [已经加载的页数] 和 [下一页加载的条数]
+ *
+ * @deprecated 回调应该使用 [已经加载的条数] 而非页数, 可以避免重复的计算, 使用 {@link com.congguangzi.master_recycler._5_page_selected.listener.LoadMoreScrollListener5}
  * @author congguangzi (congspark@163.com) 2017/11/23.
  */
-
 public abstract class LoadMoreScrollListener_3 extends RecyclerView.OnScrollListener {
 
     LinearLayoutManager layoutManager;

@@ -8,7 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.congguangzi.master_recycler.R;
-import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
+import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils;
 import com.congguangzi.master_recycler._1_loadmore.PagingLoad_1;
 
 import org.jetbrains.annotations.NotNull;
@@ -108,7 +108,7 @@ public class LoadingAdapterOptimize_2 extends RecyclerView.Adapter implements Pa
 
     @Override
     public int pageSize() {
-        return LoadMoreUtils_1.PAGE_SIZE;
+        return LoadMoreUtils.PAGE_SIZE;
     }
 
     static class LoadingViewHolderBottom extends RecyclerView.ViewHolder {

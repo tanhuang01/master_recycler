@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * @author congguangzi (congspark@163.com) 2017/11/23.
  */
 public class ItemAdapter_1 extends RecyclerView.Adapter<ItemAdapter_1.ItemViewHolder>
-        implements PagingLoad_1<Item_1> {
+        implements PagingLoad_1<Item> {
 
     // 是否正在分页加载.
     private boolean loading;
@@ -28,7 +28,7 @@ public class ItemAdapter_1 extends RecyclerView.Adapter<ItemAdapter_1.ItemViewHo
     // 是否全部加载完成.
     private boolean loaded;
 
-    private List<Item_1> dataList = new ArrayList<>();
+    private List<Item> dataList = new ArrayList<>();
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,7 +39,7 @@ public class ItemAdapter_1 extends RecyclerView.Adapter<ItemAdapter_1.ItemViewHo
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Item_1 item = dataList.get(position);
+        Item item = dataList.get(position);
         holder.title.setText(item.getTitle());
         holder.detail.setText(item.getDetail());
     }
@@ -50,7 +50,7 @@ public class ItemAdapter_1 extends RecyclerView.Adapter<ItemAdapter_1.ItemViewHo
     }
 
     @Override
-    public void loadMore(List<Item_1> set) {
+    public void loadMore(List<Item> set) {
         dataList.addAll(set);
         notifyItemRangeInserted(dataList.size() - set.size(), set.size());
         if (set.size() < pageSize()) {
@@ -71,7 +71,7 @@ public class ItemAdapter_1 extends RecyclerView.Adapter<ItemAdapter_1.ItemViewHo
 
     @Override
     public int pageSize() {
-        return LoadMoreUtils_1.PAGE_SIZE;
+        return LoadMoreUtils.PAGE_SIZE;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ItemAdapter_1 extends RecyclerView.Adapter<ItemAdapter_1.ItemViewHo
         this.loading = loading;
     }
 
-    public void setDataList(List<Item_1> dataList) {
+    public void setDataList(List<Item> dataList) {
         this.dataList = dataList;
         notifyDataSetChanged();
     }

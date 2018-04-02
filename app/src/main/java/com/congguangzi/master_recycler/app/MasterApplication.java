@@ -8,20 +8,20 @@ import android.app.Application;
 
 public class MasterApplication extends Application {
 
-    MasterApplicationComponent appComponent;
+    RecyclerAppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        appComponent = DaggerMasterApplicationComponent.builder()
+        appComponent = DaggerRecyclerAppComponent.builder()
                 .bindApplication(this)
                 .masterModule(new MasterModule(this))
                 .build();
         appComponent.inject(this);
     }
 
-    public MasterApplicationComponent getAppComponent() {
+    public RecyclerAppComponent getAppComponent() {
         return appComponent;
     }
 }

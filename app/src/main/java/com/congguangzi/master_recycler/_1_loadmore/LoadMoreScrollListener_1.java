@@ -1,11 +1,7 @@
 package com.congguangzi.master_recycler._1_loadmore;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.GridLayoutManager.DefaultSpanSizeLookup;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadingAdapterOptimize_2;
 
 /**
  * @author congguangzi (congspark@163.com) 2017/11/23.

@@ -1,6 +1,6 @@
 package com.congguangzi.master_recycler._3_loadmore_grid_with_loading;
 
-import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter_1;
+import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter;
 import com.congguangzi.master_recycler.app.PerActivity;
 
 import dagger.Module;
@@ -14,7 +14,7 @@ public class LoadMoreGridModule {
 
     @PerActivity
     @Provides
-    LoadMorePresenter_1 provideLoadMorePresenter_1(LoadMoreGridActivity activity) {
-        return new LoadMorePresenter_1(activity);
+    LoadMorePresenter provideLoadMorePresenter_1(LoadMoreGridActivity activity) {
+        return new LoadMorePresenter(activity);
     }
 }

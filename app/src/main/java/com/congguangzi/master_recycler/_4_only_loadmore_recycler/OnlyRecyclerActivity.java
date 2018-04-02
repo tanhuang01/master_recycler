@@ -5,20 +5,15 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.congguangzi.master_recycler.BaseActivity;
 import com.congguangzi.master_recycler.R;
-import com.congguangzi.master_recycler._1_loadmore.Item_1;
-import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter_1;
-import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
-import com.congguangzi.master_recycler._1_loadmore.LoadMoreView_1;
-import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadingAdapterOptimize_2;
-import com.congguangzi.master_recycler._2_loadmore_with_loading.NormalAdapter_2;
-import com.congguangzi.master_recycler._3_loadmore_grid_with_loading.LoadMoreGridActivity;
-import com.congguangzi.master_recycler._3_loadmore_grid_with_loading.LoadMoreScrollListener_3;
-import com.congguangzi.master_recycler.app.MasterApplicationComponent;
+import com.congguangzi.master_recycler._1_loadmore.Item;
+import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter;
+import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils;
+import com.congguangzi.master_recycler._1_loadmore.LoadMoreView;
+import com.congguangzi.master_recycler.app.RecyclerAppComponent;
 
 import java.util.List;
 
@@ -36,18 +31,18 @@ import butterknife.ButterKnife;
  *
  * @author congguangzi (congspark@163.com) 2017/11/21.
  */
-public class OnlyRecyclerActivity extends BaseActivity implements LoadMoreView_1<Item_1> {
+public class OnlyRecyclerActivity extends BaseActivity implements LoadMoreView<Item> {
 
     @BindView(R.id.recycler)
     PageRecyclerView recycler;
 
     @Inject
-    LoadMorePresenter_1 presenter;
+    LoadMorePresenter presenter;
 
     private NormalAdapter_4 adapter;
 
     @Override
-    protected void inject(MasterApplicationComponent appComponent) {
+    protected void inject(RecyclerAppComponent appComponent) {
         DaggerOnlyRecyclerComponent.builder()
                 .masterComponent(appComponent)
                 .bindActivity(this)
@@ -61,7 +56,7 @@ public class OnlyRecyclerActivity extends BaseActivity implements LoadMoreView_1
         setContentView(R.layout._4_activity_only_recycler);
         ButterKnife.bind(this);
         initRecyclerView();
-        presenter.loadMore(recycler.pageSize(), 0);
+        presenter.loadMore(0, recycler.pageSize());
     }
 
     private void initRecyclerView() {
@@ -70,19 +65,19 @@ public class OnlyRecyclerActivity extends BaseActivity implements LoadMoreView_1
         recycler.setLayoutManager(gridLayoutManager);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getAppContext(), DividerItemDecoration.VERTICAL);
         recycler.addItemDecoration(itemDecoration);
-        recycler.setAdapter(adapter, LoadMoreUtils_1.PAGE_SIZE);
+        recycler.setAdapter(adapter, LoadMoreUtils.PAGE_SIZE);
         recycler.addOnScrollListener(new PageRecyclerView.LoadMoreScrollListener() {
             @Override
             public void loadMore(int page, int pageSize) {
                 Toast.makeText(OnlyRecyclerActivity.this.getAppContext(), "loading " + (page + 1), Toast.LENGTH_SHORT).show();
-                presenter.loadMore(pageSize, pageSize * page);
+                presenter.loadMore(pageSize * page, pageSize);
             }
         });
 
     }
 
     @Override
-    public void loadedMore(List<Item_1> set) {
+    public void loadedMore(List<Item> set) {
         recycler.appendData(set);
     }
 

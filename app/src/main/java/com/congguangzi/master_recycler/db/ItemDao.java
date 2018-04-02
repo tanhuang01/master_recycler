@@ -7,7 +7,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.support.annotation.NonNull;
 
-import com.congguangzi.master_recycler._1_loadmore.Item_1;
+import com.congguangzi.master_recycler._1_loadmore.Item;
 
 import java.util.List;
 
@@ -18,17 +18,17 @@ import java.util.List;
 public interface ItemDao {
 
     @Query("select * from Item")
-    List<Item_1> getAllItems();
+    List<Item> getAllItems();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insert(@NonNull Item_1... value);
+    long[] insert(@NonNull Item... value);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insert(@NonNull List<Item_1> value);
+    List<Long> insert(@NonNull List<Item> value);
 
     @Delete
-    int delete(@NonNull Item_1... value);
+    int delete(@NonNull Item... value);
 
     @Query("select * from Item limit (:limit) offset (:offset)")
-    List<Item_1> getSpecialPageItems(int limit, int offset);
+    List<Item> getSpecialPageItems(int offset, int limit);
 }

@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author congguangzi (congspark@163.com) 2017/11/23.
  */
-public interface LoadMoreView_1<T> {
+public interface LoadMoreView<T> {
     /**
      * 加载更多后返回的数据.
      *

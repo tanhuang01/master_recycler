@@ -7,18 +7,18 @@ import android.arch.persistence.room.PrimaryKey;
  * @author congguangzi (congspark@163.com) 2017/11/21.
  */
 @Entity(tableName = "item")
-public class Item_1 {
+public class Item {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String title;
     private String detail;
 
-    public Item_1(String title, String detail) {
+    public Item(String title, String detail) {
         this.title = title;
         this.detail = detail;
     }
 
-    private Item_1(Builder builder) {
+    private Item(Builder builder) {
         id = builder.id;
         title = builder.title;
         detail = builder.detail;
@@ -75,8 +75,8 @@ public class Item_1 {
             return this;
         }
 
-        public Item_1 build(Builder builder) {
-            return new Item_1(builder);
+        public Item build(Builder builder) {
+            return new Item(builder);
         }
     }
 }

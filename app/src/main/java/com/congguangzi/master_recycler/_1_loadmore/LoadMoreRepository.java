@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author congguangzi (congspark@163.com) 2017/11/22.
  */
-class LoadMoreRepository_1 implements baseRepository {
+class LoadMoreRepository implements baseRepository {
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -32,9 +32,9 @@ class LoadMoreRepository_1 implements baseRepository {
 
     ItemDao dao;
 
-    LoadMorePresenter_1 presenter;
+    LoadMorePresenter presenter;
 
-    LoadMoreRepository_1(Context context, LoadMorePresenter_1 presenter) {
+    LoadMoreRepository(Context context, LoadMorePresenter presenter) {
         this.presenter = presenter;
         this.database = MasterRecyclerViewDatabase.getInstance(context);
         dao = database.getItemDao();
@@ -45,7 +45,7 @@ class LoadMoreRepository_1 implements baseRepository {
      *
      * @param items
      */
-    void initDataBase(final List<Item_1> items) {
+    void initDataBase(final List<Item> items) {
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(ObservableEmitter<Integer> e) throws Exception {
@@ -78,25 +78,25 @@ class LoadMoreRepository_1 implements baseRepository {
                 });
     }
 
-    void loadMoreItem(final int limit, final int offset) {
-        Observable.create(new ObservableOnSubscribe<List<Item_1>>() {
+    void loadMoreItem(final int offset, final int limit) {
+        Observable.create(new ObservableOnSubscribe<List<Item>>() {
             @Override
-            public void subscribe(ObservableEmitter<List<Item_1>> e) throws Exception {
+            public void subscribe(ObservableEmitter<List<Item>> e) throws Exception {
                 // 增加 1s 的延时.
                 TimeUnit.MILLISECONDS.sleep(500);
-                List<Item_1> items = dao.getSpecialPageItems(limit, offset);
+                List<Item> items = dao.getSpecialPageItems(offset, limit);
                 e.onNext(items);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Item_1>>() {
+                .subscribe(new Observer<List<Item>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         compositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(List<Item_1> items) {
+                    public void onNext(List<Item> items) {
                         presenter.loadedMore(items);
                         Log.w("db", "item size: " + items.size());
                     }

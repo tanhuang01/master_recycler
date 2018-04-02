@@ -8,8 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.congguangzi.master_recycler.R;
-import com.congguangzi.master_recycler._1_loadmore.Item_1;
-import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
+import com.congguangzi.master_recycler._1_loadmore.Item;
+import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils;
 import com.congguangzi.master_recycler._1_loadmore.PagingLoad_1;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * @author congguangzi (congspark@163.com) 2017/12/6.
  */
 
-public class LoadingAdapter_2 extends RecyclerView.Adapter implements PagingLoad_1<Item_1> {
+public class LoadingAdapter_2 extends RecyclerView.Adapter implements PagingLoad_1<Item> {
 
     private static final String TAG = "Loading";
     private boolean loading;
@@ -31,7 +31,7 @@ public class LoadingAdapter_2 extends RecyclerView.Adapter implements PagingLoad
     private final int TYPE_ITEM = 0x01;
     private final int TYPE_BOTTOM = 0x02;
 
-    private List<Item_1> data = new ArrayList<>();
+    private List<Item> data = new ArrayList<>();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,7 +53,7 @@ public class LoadingAdapter_2 extends RecyclerView.Adapter implements PagingLoad
                 viewHolderBottom.tv_loaded.setVisibility(View.VISIBLE);
             }
         } else {
-            Item_1 item = data.get(position);
+            Item item = data.get(position);
             WithLoadingViewHolder viewHolder = (WithLoadingViewHolder) holder;
             viewHolder.title.setText(item.getTitle());
             viewHolder.detail.setText(item.getDetail());
@@ -78,7 +78,7 @@ public class LoadingAdapter_2 extends RecyclerView.Adapter implements PagingLoad
     }
 
     @Override
-    public void loadMore(List<Item_1> set) {
+    public void loadMore(List<Item> set) {
         data.addAll(set);
         notifyDataSetChanged();
         if (set.size() < pageSize()) {
@@ -104,7 +104,7 @@ public class LoadingAdapter_2 extends RecyclerView.Adapter implements PagingLoad
 
     @Override
     public int pageSize() {
-        return LoadMoreUtils_1.PAGE_SIZE;
+        return LoadMoreUtils.PAGE_SIZE;
     }
 
     static class WithLoadingViewHolder extends RecyclerView.ViewHolder {

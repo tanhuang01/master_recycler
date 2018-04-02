@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.congguangzi.master_recycler.R;
-import com.congguangzi.master_recycler._1_loadmore.Item_1;
-
-import org.jetbrains.annotations.NotNull;
+import com.congguangzi.master_recycler._1_loadmore.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +21,9 @@ import com.congguangzi.master_recycler._4_only_loadmore_recycler.NormalAdapter_4
  * @author congguangzi (congspark@163.com) 2017/12/8.
  */
 
-public class NormalAdapter_4 extends RecyclerView.Adapter<WithLoadingViewHolder> implements PageRecyclerView.LoadMore<Item_1> {
+public class NormalAdapter_4 extends RecyclerView.Adapter<WithLoadingViewHolder> implements PageRecyclerView.LoadMore<Item> {
 
-    private List<Item_1> data = new ArrayList<>();
+    private List<Item> data = new ArrayList<>();
 
     @Override
     public WithLoadingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,7 +33,7 @@ public class NormalAdapter_4 extends RecyclerView.Adapter<WithLoadingViewHolder>
 
     @Override
     public void onBindViewHolder(WithLoadingViewHolder holder, int position) {
-        Item_1 item = data.get(position);
+        Item item = data.get(position);
         holder.title.setText(item.getTitle());
         holder.detail.setText(item.getDetail());
     }
@@ -46,7 +44,7 @@ public class NormalAdapter_4 extends RecyclerView.Adapter<WithLoadingViewHolder>
     }
 
     @Override
-    public void appendData(List<Item_1> set) {
+    public void appendData(List<Item> set) {
         data.addAll(set);
     }
 

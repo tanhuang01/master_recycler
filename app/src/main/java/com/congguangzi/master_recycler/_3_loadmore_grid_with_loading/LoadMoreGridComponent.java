@@ -1,6 +1,6 @@
 package com.congguangzi.master_recycler._3_loadmore_grid_with_loading;
 
-import com.congguangzi.master_recycler.app.MasterApplicationComponent;
+import com.congguangzi.master_recycler.app.RecyclerAppComponent;
 import com.congguangzi.master_recycler.app.PerActivity;
 
 import dagger.BindsInstance;
@@ -10,7 +10,7 @@ import dagger.Component;
  * @author congguangzi (congspark@163.com) 2017/12/8.
  */
 @PerActivity
-@Component(dependencies = MasterApplicationComponent.class,
+@Component(dependencies = RecyclerAppComponent.class,
         modules = LoadMoreGridModule.class)
 public interface LoadMoreGridComponent {
 
@@ -18,7 +18,7 @@ public interface LoadMoreGridComponent {
 
     @Component.Builder
     interface Builder {
-        LoadMoreGridComponent.Builder masterComponent(MasterApplicationComponent component);
+        LoadMoreGridComponent.Builder masterComponent(RecyclerAppComponent component);
 
         @BindsInstance
         LoadMoreGridComponent.Builder bindActivity(LoadMoreGridActivity activity);

@@ -9,12 +9,12 @@ import android.widget.Toast;
 
 import com.congguangzi.master_recycler.BaseActivity;
 import com.congguangzi.master_recycler.R;
-import com.congguangzi.master_recycler._1_loadmore.Item_1;
-import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter_1;
+import com.congguangzi.master_recycler._1_loadmore.Item;
+import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreScrollListener_1;
-import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils_1;
-import com.congguangzi.master_recycler._1_loadmore.LoadMoreView_1;
-import com.congguangzi.master_recycler.app.MasterApplicationComponent;
+import com.congguangzi.master_recycler._1_loadmore.LoadMoreUtils;
+import com.congguangzi.master_recycler._1_loadmore.LoadMoreView;
+import com.congguangzi.master_recycler.app.RecyclerAppComponent;
 
 import java.util.List;
 
@@ -31,10 +31,10 @@ import butterknife.ButterKnife;
  *
  * @author congguangzi (congspark@163.com) 2017/11/21.
  */
-public class LoadMoreWithLoadingActivity extends BaseActivity implements LoadMoreView_1<Item_1> {
+public class LoadMoreWithLoadingActivity extends BaseActivity implements LoadMoreView<Item> {
 
     @Inject
-    LoadMorePresenter_1 presenter;
+    LoadMorePresenter presenter;
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
@@ -43,7 +43,7 @@ public class LoadMoreWithLoadingActivity extends BaseActivity implements LoadMor
     LoadingAdapterOptimize_2 proxyAdapter;
 
     @Override
-    protected void inject(MasterApplicationComponent appComponent) {
+    protected void inject(RecyclerAppComponent appComponent) {
         DaggerLoadMoreWithLoadingComponent.builder()
                 .masterComponent(appComponent)
                 .bindActivity(this)
@@ -57,7 +57,7 @@ public class LoadMoreWithLoadingActivity extends BaseActivity implements LoadMor
         setContentView(R.layout._1_load_more_recycler_layout);
         ButterKnife.bind(this);
         initRecyclerView();
-        presenter.loadMore(LoadMoreUtils_1.PAGE_SIZE, 0);
+        presenter.loadMore(LoadMoreUtils.PAGE_SIZE, 0);
     }
 
     private void initRecyclerView() {
@@ -72,13 +72,14 @@ public class LoadMoreWithLoadingActivity extends BaseActivity implements LoadMor
             public void loadMore(int page, int count) {
                 Toast.makeText(LoadMoreWithLoadingActivity.this.getAppContext(), "loading " + (page + 1), Toast.LENGTH_SHORT).show();
                 proxyAdapter.setLoading(true);
-                presenter.loadMore(count, count * page);
+                presenter.loadMore(count * page, count);
             }
         });
+        presenter.loadMore(0, proxyAdapter.pageSize());
     }
 
     @Override
-    public void loadedMore(List<Item_1> set) {
+    public void loadedMore(List<Item> set) {
         proxyAdapter.loadMore(set);
     }
 

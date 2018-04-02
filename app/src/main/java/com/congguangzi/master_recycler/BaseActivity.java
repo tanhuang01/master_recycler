@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.congguangzi.master_recycler.app.MasterApplication;
-import com.congguangzi.master_recycler.app.MasterApplicationComponent;
+import com.congguangzi.master_recycler.app.RecyclerAppComponent;
 
 /**
  * @author congguangzi (congspark@163.com) 2017/12/6.
@@ -19,9 +19,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         inject(getMasterApplicationComponent());
     }
 
-    abstract protected void inject(MasterApplicationComponent appComponent);
+    abstract protected void inject(RecyclerAppComponent appComponent);
 
-    protected MasterApplicationComponent getMasterApplicationComponent() {
+    protected RecyclerAppComponent getMasterApplicationComponent() {
         return ((MasterApplication) getApplication()).getAppComponent();
     }
 

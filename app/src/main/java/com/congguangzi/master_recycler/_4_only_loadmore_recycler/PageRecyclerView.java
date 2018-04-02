@@ -72,8 +72,8 @@ import butterknife.ButterKnife;
  * <p>
  * <pre>
  * {@literal @}Override
- *  public void loadedMore(List<Item_1> set) {
- *     recycler.appendData(set);
+ *  public void loadedMore(List<Item> set) {
+ *     recycler.append(set);
  * }
  * </pre>
  * <p>
@@ -271,7 +271,7 @@ public class PageRecyclerView extends RecyclerView {
             }
 
             if (!(recyclerView.getAdapter() instanceof PageAdapter)) {
-                throw new RuntimeException("the Page-recyclerView must have a PageAdapter");
+                throw new RuntimeException("the Page-recyclerView must have a PageAdapter5");
             }
             pageAdapter = (PageAdapter) recyclerView.getAdapter();
 

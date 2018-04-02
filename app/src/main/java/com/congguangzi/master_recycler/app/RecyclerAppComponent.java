@@ -10,7 +10,7 @@ import dagger.Component;
  */
 @App
 @Component(modules = MasterModule.class)
-public interface MasterApplicationComponent {
+public interface RecyclerAppComponent {
 
     void inject(MasterApplication application);
 
@@ -19,10 +19,10 @@ public interface MasterApplicationComponent {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        MasterApplicationComponent.Builder bindApplication(MasterApplication application);
+        RecyclerAppComponent.Builder bindApplication(MasterApplication application);
 
-        MasterApplicationComponent.Builder masterModule(MasterModule module);
+        RecyclerAppComponent.Builder masterModule(MasterModule module);
 
-        MasterApplicationComponent build();
+        RecyclerAppComponent build();
     }
 }

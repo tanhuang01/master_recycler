@@ -13,7 +13,7 @@ public class LoadMoreModule {
 
     @Provides
     @PerActivity
-    LoadMorePresenter_1 provideLoadMorePresenter(LoadMoreActivity activity) {
-        return new LoadMorePresenter_1(activity);
+    LoadMorePresenter provideLoadMorePresenter(LoadMoreActivity activity) {
+        return new LoadMorePresenter(activity);
     }
 }

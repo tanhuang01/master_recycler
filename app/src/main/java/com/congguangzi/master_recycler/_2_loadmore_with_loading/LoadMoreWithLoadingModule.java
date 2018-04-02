@@ -1,6 +1,6 @@
 package com.congguangzi.master_recycler._2_loadmore_with_loading;
 
-import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter_1;
+import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter;
 import com.congguangzi.master_recycler.app.PerActivity;
 
 import dagger.Module;
@@ -14,7 +14,7 @@ public class LoadMoreWithLoadingModule {
 
     @PerActivity
     @Provides
-    LoadMorePresenter_1 provideLoadMorePresenter(LoadMoreWithLoadingActivity activity) {
-        return new LoadMorePresenter_1(activity);
+    LoadMorePresenter provideLoadMorePresenter(LoadMoreWithLoadingActivity activity) {
+        return new LoadMorePresenter(activity);
     }
 }

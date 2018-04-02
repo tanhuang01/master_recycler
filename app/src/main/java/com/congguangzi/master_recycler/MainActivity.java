@@ -9,6 +9,7 @@ import com.congguangzi.master_recycler._1_loadmore.LoadMoreActivity;
 import com.congguangzi.master_recycler._2_loadmore_with_loading.LoadMoreWithLoadingActivity;
 import com.congguangzi.master_recycler._3_loadmore_grid_with_loading.LoadMoreGridActivity;
 import com.congguangzi.master_recycler._4_only_loadmore_recycler.OnlyRecyclerActivity;
+import com.congguangzi.master_recycler._5_page_selected.Activity5;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,11 +30,14 @@ public class MainActivity extends AppCompatActivity {
     Button bt_only_recycler;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
     }
 
     @OnClick(R.id.bt_load_more)
@@ -57,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.bt_only_page_recycler)
     void startOnlyPageActivity() {
         Intent intent = new Intent(getApplicationContext(), OnlyRecyclerActivity.class);
+        startActivity(intent);
+    }
+
+
+    @OnClick(R.id.bt_selected_paged)
+    void startPageAndSelectedActivity() {
+        Intent intent = new Intent(getApplicationContext(), Activity5.class);
         startActivity(intent);
     }
 

@@ -20,7 +20,8 @@
         <activity android:name="._1_loadmore.LoadMoreActivity" />
         <activity android:name="._2_loadmore_with_loading.LoadMoreWithLoadingActivity" />
         <activity android:name="._3_loadmore_grid_with_loading.LoadMoreGridActivity" />
-        <activity android:name="._4_only_loadmore_recycler.OnlyRecyclerActivity"></activity>
+        <activity android:name="._4_only_loadmore_recycler.OnlyRecyclerActivity" />
+        <activity android:name="._5_page_selected.Activity5"></activity>
     </application>
 
 </manifest>

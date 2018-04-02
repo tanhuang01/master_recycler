@@ -27,6 +27,4 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; And the app show: 
 
-![load paged data and high-light selected item](https://github.com/tanhuang01/master_recycler/tree/master/pic/master_recycler_1_page_selected.gif)
-
-![load paged data and high-light selected item_2](https://github.com/tanhuang01/master_recycler/blob/master/pic/master_recycler_1_page_selected.gif)
+![load paged data and high-light selected item](https://github.com/tanhuang01/master_recycler/blob/master/pic/master_recycler_1_page_selected.gif)

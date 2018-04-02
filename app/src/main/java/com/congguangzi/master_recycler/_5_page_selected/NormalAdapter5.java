@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 简介: 基础的 adapter 仅仅提供数据的展示
+ * 简介: 基础的 adapter 仅仅提供数据的展示, 为简化逻辑仅仅做文字的显示, 不涉及图片的现实操作.
  *
  * @author congguangzi (congspark@163.com) 2018/3/29.
  */
@@ -42,6 +42,7 @@ public class NormalAdapter5 extends RecyclerView.Adapter<NormalAdapter5.NormalVi
         holder.itemView.setTag(R.id.key_object, item);
     }
 
+
     @Override
     public int getItemCount() {
         return data == null ? 0 : data.size();
@@ -64,6 +65,7 @@ public class NormalAdapter5 extends RecyclerView.Adapter<NormalAdapter5.NormalVi
     public void append(List<Item> set) {
         data.addAll(set);
     }
+
 
     static class NormalViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_title)

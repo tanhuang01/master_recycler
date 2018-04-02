@@ -79,7 +79,7 @@ public class Activity5 extends BaseActivity implements LoadMoreView<Item> {
         selectedAdapter.setOnItemPositionSelectedListener(new SelectedAdapter5.OnItemPositionSelectedListener() {
             @Override
             public void onItemPosition(int position) {
-
+                Toast.makeText(getAppContext(), "pos " + position, Toast.LENGTH_SHORT).show();
             }
         });
         selectedAdapter.setOnItemObjectSelectedListener(new SelectedAdapter5.OnItemObjectSelectedListener<Item>() {

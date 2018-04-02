@@ -17,13 +17,56 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 简介: adapter 的代理类, 提供分页加载的功能.
+ * 简介: 为代理 adapter 提供分页加载的功能.
  * <p>
- * <b>NOTE:</b> 如果使用该代理类添加分页加载的功能, 那么初始的 adapter 需要实现 {@link IAppendData} 接口
+ * 使用示例:
+ * 1. 直接与数据交互的 adapter 需要继承 {@link IAppendData} 接口.
+ * <pre>
+ * public class NormalAdapter extends RecyclerView.Adapter<..> implements IAppendData<Item> {
+ *      // ....
+ *
+ *     {@literal @}Override
+ *      public void append(List<Item> set) {
+ *          data.addAll(set);
+ *          // 不需要调用 notify 方法, 外层的代理 adapter 会处理.
+ *      }
+ * }
+ * </pre>
+ * <p>
+ * 2. client 端代码.
+ * <pre>
+ *      adapter = new NormalAdapter5();
+ *      pageAdapter = new PageAdapter5(adapter);
+ *      recyclerView.setAdapter(pageAdapter);
+ *
+ *      // 滑动监听.
+ *      recyclerView.addOnScrollListener(new LoadMoreScrollListener5() {
+ *         {@literal @}Override
+ *          public void loadMore(int loadedItem, int pageSize) {
+ *
+ *              // 滑动到最底端时, 加载下一页数据.
+ *              presenter.loadMore(loadedItem, pageSize);
+ *          }
+ *      });
+ *
+ *      // 加载第一页数据.
+ *      presenter.loadMore(0, pageAdapter.pageSize());
+ * </pre>
+ * <p>
+ * 3. 可与 {@link SelectedAdapter5} 共同代理一个类, 同时添加分页和选择的功能.
+ * <pre>
+ *     adapter = new NormalAdapter5();
+ *     selectedAdapter = new SelectedAdapter5(adapter);
+ *     pageAdapter = new PageAdapter5(selectedAdapter);
+ *
+ *     // pageAdapter 必须是最外层的代理, 因为涉及到与 RecyclerView 的滑动交互.
+ *     recyclerView.setAdapter(pageAdapter);
+ * </pre>
+ * <p>
  *
  * @author congguangzi (congspark@163.com) 2018/3/29.
  */
-public class PageAdapter5 extends RecyclerView.Adapter implements IProxyAdapter {
+public class PageAdapter5 extends BaseProxyAdapter {
 
     /**
      * 数据量的大小尽量可以展示满一个屏幕.
@@ -43,22 +86,12 @@ public class PageAdapter5 extends RecyclerView.Adapter implements IProxyAdapter 
     private final int TYPE_ITEM = 0x01;
     private final int TYPE_BOTTOM = 0x02;
 
-    @NotNull
-    RecyclerView.Adapter adapter;
-
-    RecyclerView.Adapter proxyAdapter;
-
     public PageAdapter5(RecyclerView.Adapter adapter) {
-        this.adapter = adapter;
+        super(adapter);
         // 添加对 adapter 的判断.
-        if (!(getAdapter() instanceof IAppendData)) {
+        if (!(super.getAdapter() instanceof IAppendData)) {
             throw new RuntimeException("the " + adapter.getClass().getSimpleName()
                     + " should implement " + IAppendData.class.getSimpleName());
-        }
-
-        // 如果是一个 代理adapter, 那么需要设置上级.
-        if (adapter instanceof IProxyAdapter) {
-            ((IProxyAdapter) adapter).setProxyAdapter(this);
         }
     }
 
@@ -68,7 +101,7 @@ public class PageAdapter5 extends RecyclerView.Adapter implements IProxyAdapter 
             return new PageViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout._2_load_more_bottom, parent, false));
         } else {
-            return adapter.onCreateViewHolder(parent, viewType);
+            return super.adapter.onCreateViewHolder(parent, viewType);
         }
     }
 
@@ -84,13 +117,13 @@ public class PageAdapter5 extends RecyclerView.Adapter implements IProxyAdapter 
                 viewHolder.tv_loaded.setVisibility(View.GONE);
             }
         } else {
-            adapter.onBindViewHolder(holder, position);
+            super.adapter.onBindViewHolder(holder, position);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == adapter.getItemCount()) {
+        if (position == super.adapter.getItemCount()) {
             return TYPE_BOTTOM;
         } else {
             return TYPE_ITEM;
@@ -99,7 +132,7 @@ public class PageAdapter5 extends RecyclerView.Adapter implements IProxyAdapter 
 
     @Override
     public int getItemCount() {
-        return adapter.getItemCount() + 1;
+        return super.adapter.getItemCount() + 1;
     }
 
     /**
@@ -154,31 +187,13 @@ public class PageAdapter5 extends RecyclerView.Adapter implements IProxyAdapter 
     public void append(List set) {
         if (set.size() > 0) {
             // it can cast right, or an exception has thrown in the constructor
-            ((IAppendData) getAdapter()).append(set);
-            notifyDataSetChanged();
+            ((IAppendData) super.getAdapter()).append(set);
+            super.getProxyAdapter().notifyDataSetChanged();
         }
         if (set.size() < pageSize()) {
             loaded = true;
         }
         loading = false;
-    }
-
-    @Override
-    public RecyclerView.Adapter getAdapter() {
-        return adapter instanceof IProxyAdapter ? ((IProxyAdapter) adapter).getAdapter() : adapter;
-    }
-
-    @Override
-    public RecyclerView.Adapter getProxyAdapter() {
-        if (proxyAdapter == null) {
-            return this;
-        }
-        return proxyAdapter instanceof IProxyAdapter ? ((IProxyAdapter) proxyAdapter).getProxyAdapter() : proxyAdapter;
-    }
-
-    @Override
-    public void setProxyAdapter(RecyclerView.Adapter proxyAdapter) {
-        this.proxyAdapter = proxyAdapter;
     }
 
     static class PageViewHolder extends RecyclerView.ViewHolder {

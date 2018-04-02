@@ -1,8 +1,6 @@
 package com.congguangzi.master_recycler._5_page_selected.adapter;
 
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,12 +9,37 @@ import com.congguangzi.master_recycler.R;
 import java.util.List;
 
 /**
- * 简介: adapter 的代理类, 提供点击选中的功能.
+ * 简介: adapter 的代理类, 为代理的 adapter 提供点击选中高亮的功能.
+ * <p>
+ * 使用示例:
+ * <pre>
+ *      adapter = new NormalAdapter5();
+ *      selectedAdapter = new SelectedAdapter5(adapter); // adapter 非空, 否则抛出异常.
+ *      selectedAdapter.setOnItemPositionSelectedListener(new SelectedAdapter5.OnItemPositionSelectedListener() {
  *
- * @param <T>
+ *         {@literal @}Override
+ *          public void onItemPosition(int position) {
+ *               // 点击位置的回调
+ *              Toast.makeText(getAppContext(), "pos " + position, Toast.LENGTH_SHORT).show();
+ *          }
+ *      });
+ *      selectedAdapter.setOnItemObjectSelectedListener(new SelectedAdapter5.OnItemObjectSelectedListener<Item>() {
+ *
+ *         {@literal @}Override
+ *          public void onItemObject(Item obj) {
+ *              // 点击位置数据项的回调
+ *              Toast.makeText(getAppContext(),  obj.toString() , Toast.LENGTH_SHORT).show();
+ *          }
+ *      });
+ *
+ *      // 使用代理的 adapter.
+ *      recyclerView.setAdapter(selectedAdapter);
+ * </pre>
+ *
+ * @param <T> adapter 每一个 item 关联的数据类型
  * @author congguangzi (congspark@163.com) 2018/3/30.
  */
-public class SelectedAdapter5<T> extends RecyclerView.Adapter implements IProxyAdapter {
+public class SelectedAdapter5<T> extends BaseProxyAdapter {
 
     // 更新背景色 payload 标记
     private final int KEY_UPDATE_SELECTED = 0x01;
@@ -40,64 +63,19 @@ public class SelectedAdapter5<T> extends RecyclerView.Adapter implements IProxyA
     private OnItemObjectSelectedListener<T> onItemObjectSelectedListener;
 
     /**
-     * {@link SelectedAdapter5} 代理的 adapter. 给该 adapter 添加点击 item 高亮显示和点击位置和数据的回调
-     */
-    RecyclerView.Adapter adapter;
-
-    /**
-     * 代理 {@link SelectedAdapter5} 的 adapter. 上一级代理的引用.
-     * <p>
-     * <b>NOTE:</b> 因为通过代理的方式添加功能, 所以可能存在多层代理.
-     */
-    RecyclerView.Adapter proxyAdapter;
-
-    /**
-     * @see SelectedAdapter5#SelectedAdapter5(RecyclerView.Adapter, OnItemPositionSelectedListener, OnItemObjectSelectedListener)
+     * @param adapter 被代理的 adapter.
      */
     public SelectedAdapter5(RecyclerView.Adapter adapter) {
         // 添加对 adapter 的判断.
-        if (adapter == null) {
-            throw new RuntimeException("the adapter to be proxy can NOT be NULL");
-        }
-        this.adapter = adapter;
-
-        // 如果 adapter 是一个代理, 那么需要设置上级.
-        if (adapter instanceof IProxyAdapter) {
-            ((IProxyAdapter) adapter).setProxyAdapter(this);
-        }
+        super(adapter);
     }
 
-    /**
-     * @see SelectedAdapter5#SelectedAdapter5(RecyclerView.Adapter, OnItemPositionSelectedListener, OnItemObjectSelectedListener)
-     */
-    public SelectedAdapter5(RecyclerView.Adapter adapter, OnItemPositionSelectedListener l) {
-        this(adapter);
-        this.onItemPositionSelectedListener = l;
-    }
-
-    /**
-     * @see SelectedAdapter5#SelectedAdapter5(RecyclerView.Adapter, OnItemPositionSelectedListener, OnItemObjectSelectedListener)
-     */
-    public SelectedAdapter5(RecyclerView.Adapter adapter, OnItemObjectSelectedListener<T> l) {
-        this(adapter);
-        this.onItemObjectSelectedListener = l;
-    }
-
-    /**
-     * @param adapter          被代理的 adapter
-     * @param positionListener 被点击 item 的位置监听
-     * @param itemListener     被点击 item 的数据监听
-     */
-    public SelectedAdapter5(RecyclerView.Adapter adapter, OnItemPositionSelectedListener positionListener, OnItemObjectSelectedListener<T> itemListener) {
-        this(adapter);
-        this.onItemPositionSelectedListener = positionListener;
-        this.onItemObjectSelectedListener = itemListener;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return adapter.onCreateViewHolder(parent, viewType);
     }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -120,6 +98,7 @@ public class SelectedAdapter5<T> extends RecyclerView.Adapter implements IProxyA
         holder.itemView.setOnClickListener(selectedListener);
     }
 
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
         if (payloads == null || payloads.isEmpty()) {
@@ -138,44 +117,24 @@ public class SelectedAdapter5<T> extends RecyclerView.Adapter implements IProxyA
         }
     }
 
+
     @Override
     public int getItemCount() {
         return adapter == null ? 0 : adapter.getItemCount();
     }
 
 
-    public void setOnItemPositionSelectedListener(OnItemPositionSelectedListener l) {
+    public SelectedAdapter5 setOnItemPositionSelectedListener(OnItemPositionSelectedListener l) {
         this.onItemPositionSelectedListener = l;
+        return this;
     }
 
-    public void setOnItemObjectSelectedListener(OnItemObjectSelectedListener<T> l) {
+
+    public SelectedAdapter5 setOnItemObjectSelectedListener(OnItemObjectSelectedListener<T> l) {
         this.onItemObjectSelectedListener = l;
+        return this;
     }
 
-    /**
-     * @return 下一级adapter, 该 {@link SelectedAdapter5} 代理的 adapter
-     */
-    @Override
-    public RecyclerView.Adapter getAdapter() {
-        // 被代理的 adapter 一定非空.
-        return adapter instanceof IProxyAdapter ? ((IProxyAdapter) adapter).getAdapter() : adapter;
-    }
-
-    /**
-     * @return 上一级 adapter, 代理 {@link SelectedAdapter5} 的 adapter
-     */
-    @Override
-    public RecyclerView.Adapter getProxyAdapter() {
-        if (proxyAdapter == null) {
-            return this;
-        }
-        return proxyAdapter instanceof IProxyAdapter ? ((IProxyAdapter) proxyAdapter).getProxyAdapter() : proxyAdapter;
-    }
-
-    @Override
-    public void setProxyAdapter(@NonNull RecyclerView.Adapter proxyAdapter) {
-        this.proxyAdapter = proxyAdapter;
-    }
 
     /**
      * 简介: RecyclerView 列表中, 每一个 item 的监听.
@@ -190,9 +149,14 @@ public class SelectedAdapter5<T> extends RecyclerView.Adapter implements IProxyA
                 return;
             }
 
-            getProxyAdapter().notifyItemChanged(selectedIndex, KEY_UPDATE_CLEAR);
+            // 清除
+            SelectedAdapter5.super.getProxyAdapter()
+                    .notifyItemChanged(selectedIndex, KEY_UPDATE_CLEAR);
+
+            // 点击项高亮显示
             selectedIndex = (int) v.getTag(R.id.key_position);
-            getProxyAdapter().notifyItemChanged(selectedIndex, KEY_UPDATE_SELECTED);
+            SelectedAdapter5.super.getProxyAdapter()
+                    .notifyItemChanged(selectedIndex, KEY_UPDATE_SELECTED);
 
             if (onItemPositionSelectedListener != null) {
                 onItemPositionSelectedListener.onItemPosition((Integer) v.getTag(R.id.key_position));

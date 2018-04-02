@@ -3,6 +3,7 @@ package com.congguangzi.master_recycler._5_page_selected.listener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.congguangzi.master_recycler._5_page_selected.adapter.BaseProxyAdapter;
 import com.congguangzi.master_recycler._5_page_selected.adapter.PageAdapter5;
 
 /**
@@ -36,6 +37,30 @@ public abstract class LoadMoreScrollListener5 extends RecyclerView.OnScrollListe
      * adapter must be  {@link PageAdapter5}, or an Exception will be thrown.
      */
     private void judgeAdapter(RecyclerView.Adapter adapter) {
+
+//        // 判断是否为 代理 adapter
+//        if (!(adapter instanceof BaseProxyAdapter)) {
+//            throw new RuntimeException("the " + getClass().getSimpleName() + "must initalized with a "
+//                    + BaseProxyAdapter.class.getSimpleName());
+//        }
+//
+//        // 获取 PageAdapter5,
+//        while (adapter != null) {
+//            if (adapter instanceof PageAdapter5) {
+//                this.adapter = adapter;
+//                break;
+//            } else {
+//                adapter = ((BaseProxyAdapter) adapter).getAdapter();
+//            }
+//        }
+//
+//        // 代理链中必须有一个是 PageAdapter
+//        if (this.adapter == null) {
+//            throw new RuntimeException("the " + getClass().getSimpleName() + " must initialized with a "
+//                    + PageAdapter5.class.getSimpleName());
+//        }
+
+        // 目前认为, PageAdapter 为最外层代理.
         if (!(adapter instanceof PageAdapter5)) {
             throw new RuntimeException("the " + getClass().getSimpleName() + " must initialized with a "
                     + PageAdapter5.class.getSimpleName());
@@ -48,6 +73,7 @@ public abstract class LoadMoreScrollListener5 extends RecyclerView.OnScrollListe
         // initial the adapter if necessary
         if (adapter == null) {
             adapter = recyclerView.getAdapter();
+
             judgeAdapter(adapter);
         }
 

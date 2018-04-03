@@ -6,7 +6,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp; The both proxy adapter are decoupled from the orignal normal adapter, which hold the data set.   
 &nbsp;&nbsp;&nbsp;&nbsp; Relating classes are in the *_5_page_selected* package.
 
-&nbsp;&nbsp;&nbsp;&nbsp; You can use the adapters like this: (May be in should add another more code to initalize a RecyclerView, just as the Activity5.java shows)
+&nbsp;&nbsp;&nbsp;&nbsp; You can use the adapters like this: (May be you should add another more code to initalize a RecyclerView, just as the Activity5.java shows)
 ```java
         adapter = new NormalAdapter5();
         selectedAdapter = new SelectedAdapter5(adapter);

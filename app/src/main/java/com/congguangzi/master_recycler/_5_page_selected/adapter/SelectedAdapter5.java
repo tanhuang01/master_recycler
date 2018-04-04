@@ -12,6 +12,17 @@ import java.util.List;
  * 简介: adapter 的代理类, 为代理的 adapter 提供点击选中高亮的功能.
  * <p>
  * 使用示例:
+ * * 1. 在与数据交互的 adapter 中添 tag.
+ * <pre>
+ *     {@literal @}Override
+ *      public void onBindViewHolder(NormalViewHolder holder, int position) {
+ *          // another code
+ *
+ *          // 设置选择 adapter 需要添加的 item 数据项 (如果需要)
+ *          holder.itemView.setTag(R.id.key_object, item);
+ *     }
+ * </pre>
+ * 2.高层模块代码引用
  * <pre>
  *      adapter = new NormalAdapter5();
  *      selectedAdapter = new SelectedAdapter5(adapter); // adapter 非空, 否则抛出异常.
@@ -66,20 +77,19 @@ public class SelectedAdapter5<T> extends BaseProxyAdapter {
      * @param adapter 被代理的 adapter.
      */
     public SelectedAdapter5(RecyclerView.Adapter adapter) {
-        // 添加对 adapter 的判断.
         super(adapter);
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return adapter.onCreateViewHolder(parent, viewType);
+        return super.adapter.onCreateViewHolder(parent, viewType);
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        adapter.onBindViewHolder(holder, position);
+        super.adapter.onBindViewHolder(holder, position);
 
         // 防止每次绑定时, 都创建新的 OnItemSelectedListener.
         // 确保 OnItemSelectedListener 的数量与 ViewHolder 的数量相同
@@ -120,7 +130,7 @@ public class SelectedAdapter5<T> extends BaseProxyAdapter {
 
     @Override
     public int getItemCount() {
-        return adapter == null ? 0 : adapter.getItemCount();
+        return super.adapter == null ? 0 : super.adapter.getItemCount();
     }
 
 
@@ -134,7 +144,6 @@ public class SelectedAdapter5<T> extends BaseProxyAdapter {
         this.onItemObjectSelectedListener = l;
         return this;
     }
-
 
     /**
      * 简介: RecyclerView 列表中, 每一个 item 的监听.
@@ -150,12 +159,12 @@ public class SelectedAdapter5<T> extends BaseProxyAdapter {
             }
 
             // 清除
-            SelectedAdapter5.super.getProxyAdapter()
+            SelectedAdapter5.super.getRecyclerViewAdapter()
                     .notifyItemChanged(selectedIndex, KEY_UPDATE_CLEAR);
 
             // 点击项高亮显示
             selectedIndex = (int) v.getTag(R.id.key_position);
-            SelectedAdapter5.super.getProxyAdapter()
+            SelectedAdapter5.super.getRecyclerViewAdapter()
                     .notifyItemChanged(selectedIndex, KEY_UPDATE_SELECTED);
 
             if (onItemPositionSelectedListener != null) {

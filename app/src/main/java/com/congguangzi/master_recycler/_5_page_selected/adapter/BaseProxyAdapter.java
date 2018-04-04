@@ -20,7 +20,7 @@ public abstract class BaseProxyAdapter extends RecyclerView.Adapter {
     /**
      * 外层的 adapter
      * <p>
-     * <b>NOTE:</b> 因为通过代理的方式添加功能, 所以可能存在多层代理.
+     * <b>NOTE:</b> 可能有多层, 不一定直接与 {@link RecyclerView} 交互
      */
     private RecyclerView.Adapter proxyAdapter;
 
@@ -28,7 +28,7 @@ public abstract class BaseProxyAdapter extends RecyclerView.Adapter {
     BaseProxyAdapter(RecyclerView.Adapter adapter) {
         this.adapter = adapter;
         if (adapter == null) {
-            throw new RuntimeException("the adapter to be proxy can NOT be NULL");
+            throw new RuntimeException("the adapter to add proxy can NOT be NULL");
         }
 
         // 如果是一个 代理adapter, 那么需要设置上级.
@@ -40,19 +40,19 @@ public abstract class BaseProxyAdapter extends RecyclerView.Adapter {
     /**
      * @return 最内层的 adapter. 即与数据交互的 adapter.
      */
-    public RecyclerView.Adapter getAdapter() {
+    public RecyclerView.Adapter getDataAdapter() {
         // 被代理的 adapter 一定非空
-        return adapter instanceof BaseProxyAdapter ? ((BaseProxyAdapter) adapter).getAdapter() : adapter;
+        return adapter instanceof BaseProxyAdapter ? ((BaseProxyAdapter) adapter).getDataAdapter() : adapter;
     }
 
     /**
      * @return 最外层代理的 adapter. 即与 RecyclerView 直接交互的 adapter.
      */
-    protected RecyclerView.Adapter getProxyAdapter() {
+    protected RecyclerView.Adapter getRecyclerViewAdapter() {
         if (proxyAdapter == null) {
             return this;
         }
-        return proxyAdapter instanceof BaseProxyAdapter ? ((BaseProxyAdapter) proxyAdapter).getProxyAdapter() : proxyAdapter;
+        return proxyAdapter instanceof BaseProxyAdapter ? ((BaseProxyAdapter) proxyAdapter).getRecyclerViewAdapter() : proxyAdapter;
     }
 
     private void setProxyAdapter(RecyclerView.Adapter proxyAdapter) {

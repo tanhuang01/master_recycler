@@ -50,7 +50,7 @@ public abstract class LoadMoreScrollListener5 extends RecyclerView.OnScrollListe
 //                this.adapter = adapter;
 //                break;
 //            } else {
-//                adapter = ((BaseProxyAdapter) adapter).getAdapter();
+//                adapter = ((BaseProxyAdapter) adapter).getDataAdapter();
 //            }
 //        }
 //

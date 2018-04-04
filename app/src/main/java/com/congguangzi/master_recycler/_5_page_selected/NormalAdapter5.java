@@ -38,7 +38,7 @@ public class NormalAdapter5 extends RecyclerView.Adapter<NormalAdapter5.NormalVi
         holder.title.setText(item.getTitle());
         holder.detail.setText(item.getDetail());
 
-        //
+        // 设置选择 adapter 需要添加的 item
         holder.itemView.setTag(R.id.key_object, item);
     }
 

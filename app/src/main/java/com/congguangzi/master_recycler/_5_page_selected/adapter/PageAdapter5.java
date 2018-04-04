@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.congguangzi.master_recycler.R;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -89,7 +87,7 @@ public class PageAdapter5 extends BaseProxyAdapter {
     public PageAdapter5(RecyclerView.Adapter adapter) {
         super(adapter);
         // 添加对 adapter 的判断.
-        if (!(super.getAdapter() instanceof IAppendData)) {
+        if (!(super.getDataAdapter() instanceof IAppendData)) {
             throw new RuntimeException("the " + adapter.getClass().getSimpleName()
                     + " should implement " + IAppendData.class.getSimpleName());
         }
@@ -187,8 +185,8 @@ public class PageAdapter5 extends BaseProxyAdapter {
     public void append(List set) {
         if (set.size() > 0) {
             // it can cast right, or an exception has thrown in the constructor
-            ((IAppendData) super.getAdapter()).append(set);
-            super.getProxyAdapter().notifyDataSetChanged();
+            ((IAppendData) super.getDataAdapter()).append(set);
+            super.getRecyclerViewAdapter().notifyDataSetChanged();
         }
         if (set.size() < pageSize()) {
             loaded = true;

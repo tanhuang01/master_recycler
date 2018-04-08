@@ -49,7 +49,7 @@ public class NormalAdapter5 extends RecyclerView.Adapter<NormalAdapter5.NormalVi
     }
 
     /**
-     * 重置当前 adapter 中的集合, 并且刷新.
+     * 重置当前 adapter 中的集合
      *
      * @param set 带替换的集合.
      */
@@ -58,11 +58,10 @@ public class NormalAdapter5 extends RecyclerView.Adapter<NormalAdapter5.NormalVi
             return;
         }
         data = set;
-        notifyDataSetChanged();
     }
 
     @Override
-    public void append(List<Item> set) {
+    public void appendData(List<Item> set) {
         data.addAll(set);
     }
 

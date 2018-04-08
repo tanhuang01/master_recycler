@@ -15,7 +15,7 @@ import com.congguangzi.master_recycler.R;
 import com.congguangzi.master_recycler._1_loadmore.Item;
 import com.congguangzi.master_recycler._1_loadmore.LoadMorePresenter;
 import com.congguangzi.master_recycler._1_loadmore.LoadMoreView;
-import com.congguangzi.master_recycler._5_page_selected.adapter.PageAdapter5;
+import com.congguangzi.master_recycler._5_page_selected.adapter.PagedAdapter5;
 import com.congguangzi.master_recycler._5_page_selected.adapter.SelectedAdapter5;
 import com.congguangzi.master_recycler._5_page_selected.listener.LoadMoreScrollListener5;
 import com.congguangzi.master_recycler.app.RecyclerAppComponent;
@@ -48,7 +48,7 @@ public class Activity5 extends BaseActivity implements LoadMoreView<Item> {
 
     NormalAdapter5 adapter;
 
-    PageAdapter5 pageAdapter;
+    PagedAdapter5 pageAdapter;
 
     SelectedAdapter5<Item> selectedAdapter;
 
@@ -74,7 +74,7 @@ public class Activity5 extends BaseActivity implements LoadMoreView<Item> {
 
         adapter = new NormalAdapter5();
         selectedAdapter = new SelectedAdapter5(adapter);
-        pageAdapter = new PageAdapter5(selectedAdapter);
+        pageAdapter = new PagedAdapter5(selectedAdapter);
 
         selectedAdapter.setOnItemPositionSelectedListener(new SelectedAdapter5.OnItemPositionSelectedListener() {
             @Override
@@ -110,7 +110,7 @@ public class Activity5 extends BaseActivity implements LoadMoreView<Item> {
         if (pr_loading.getVisibility() == View.VISIBLE) {
             pr_loading.setVisibility(View.GONE);
         }
-        pageAdapter.append(set);
+        pageAdapter.appendData(set);
     }
 
     @Override

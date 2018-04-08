@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  *      // ....
  *
  *     {@literal @}Override
- *      public void append(List<Item> set) {
+ *      public void appendData(List<Item> set) {
  *          data.addAll(set);
  *          // 不需要调用 notify 方法, 外层的代理 adapter 会处理.
  *      }
@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
  * 2. client 端代码.
  * <pre>
  *      adapter = new NormalAdapter5();
- *      pageAdapter = new PageAdapter5(adapter);
+ *      pageAdapter = new PagedAdapter5(adapter);
  *      recyclerView.setAdapter(pageAdapter);
  *
  *      // 滑动监听.
@@ -55,7 +55,7 @@ import butterknife.ButterKnife;
  * <pre>
  *     adapter = new NormalAdapter5();
  *     selectedAdapter = new SelectedAdapter5(adapter);
- *     pageAdapter = new PageAdapter5(selectedAdapter);
+ *     pageAdapter = new PagedAdapter5(selectedAdapter);
  *
  *     // pageAdapter 必须是最外层的代理, 因为涉及到与 RecyclerView 的滑动交互.
  *     recyclerView.setAdapter(pageAdapter);
@@ -64,7 +64,7 @@ import butterknife.ButterKnife;
  *
  * @author congguangzi (congspark@163.com) 2018/3/29.
  */
-public class PageAdapter5 extends BaseProxyAdapter {
+public class PagedAdapter5<T> extends BaseProxyAdapter {
 
     /**
      * 数据量的大小尽量可以展示满一个屏幕.
@@ -84,7 +84,7 @@ public class PageAdapter5 extends BaseProxyAdapter {
     private final int TYPE_ITEM = 0x01;
     private final int TYPE_BOTTOM = 0x02;
 
-    public PageAdapter5(RecyclerView.Adapter adapter) {
+    public PagedAdapter5(RecyclerView.Adapter adapter) {
         super(adapter);
         // 添加对 adapter 的判断.
         if (!(super.getDataAdapter() instanceof IAppendData)) {
@@ -178,20 +178,36 @@ public class PageAdapter5 extends BaseProxyAdapter {
     }
 
     /**
-     * append next page data
+     * appendData next page data
      *
      * @param set data set load from the database or server
      */
-    public void append(List set) {
+    public void appendData(List<T> set) {
+        if (set == null) {
+            return;
+        }
         if (set.size() > 0) {
             // it can cast right, or an exception has thrown in the constructor
-            ((IAppendData) super.getDataAdapter()).append(set);
+            ((IAppendData) super.getDataAdapter()).appendData(set);
             super.getRecyclerViewAdapter().notifyDataSetChanged();
         }
         if (set.size() < pageSize()) {
             loaded = true;
         }
         loading = false;
+    }
+
+    /**
+     * reset the data of the adapter.
+     *
+     * @param set data set to be reset
+     */
+    public void setData(List set) {
+        if (set != null && !set.isEmpty()) {
+            ((IAppendData) super.getDataAdapter()).setData(set);
+
+            loaded = set.size() % pageSize() != 0;
+        }
     }
 
     static class PageViewHolder extends RecyclerView.ViewHolder {

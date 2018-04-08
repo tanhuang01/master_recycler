@@ -3,8 +3,7 @@ package com.congguangzi.master_recycler._5_page_selected.listener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.congguangzi.master_recycler._5_page_selected.adapter.BaseProxyAdapter;
-import com.congguangzi.master_recycler._5_page_selected.adapter.PageAdapter5;
+import com.congguangzi.master_recycler._5_page_selected.adapter.PagedAdapter5;
 
 /**
  * 简介: Recycler 的滑动监听. 当最后一个 item 出现在屏幕上的时候, 回调加载下一页的方法.
@@ -34,7 +33,7 @@ public abstract class LoadMoreScrollListener5 extends RecyclerView.OnScrollListe
     }
 
     /**
-     * adapter must be  {@link PageAdapter5}, or an Exception will be thrown.
+     * adapter must be  {@link PagedAdapter5}, or an Exception will be thrown.
      */
     private void judgeAdapter(RecyclerView.Adapter adapter) {
 
@@ -44,9 +43,9 @@ public abstract class LoadMoreScrollListener5 extends RecyclerView.OnScrollListe
 //                    + BaseProxyAdapter.class.getSimpleName());
 //        }
 //
-//        // 获取 PageAdapter5,
+//        // 获取 PagedAdapter5,
 //        while (adapter != null) {
-//            if (adapter instanceof PageAdapter5) {
+//            if (adapter instanceof PagedAdapter5) {
 //                this.adapter = adapter;
 //                break;
 //            } else {
@@ -57,13 +56,13 @@ public abstract class LoadMoreScrollListener5 extends RecyclerView.OnScrollListe
 //        // 代理链中必须有一个是 PageAdapter
 //        if (this.adapter == null) {
 //            throw new RuntimeException("the " + getClass().getSimpleName() + " must initialized with a "
-//                    + PageAdapter5.class.getSimpleName());
+//                    + PagedAdapter5.class.getSimpleName());
 //        }
 
         // 目前认为, PageAdapter 为最外层代理.
-        if (!(adapter instanceof PageAdapter5)) {
+        if (!(adapter instanceof PagedAdapter5)) {
             throw new RuntimeException("the " + getClass().getSimpleName() + " must initialized with a "
-                    + PageAdapter5.class.getSimpleName());
+                    + PagedAdapter5.class.getSimpleName());
         }
     }
 
@@ -85,14 +84,14 @@ public abstract class LoadMoreScrollListener5 extends RecyclerView.OnScrollListe
         }
 
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-        int pageSize = ((PageAdapter5) adapter).pageSize();
+        int pageSize = ((PagedAdapter5) adapter).pageSize();
 
         // when the last item, the loading item with progress bar, is showing,
         // start to get the data to show the next page.
         if (adapter.getItemCount() >= pageSize
                 && adapter.getItemCount() - 1 == lastVisibleItemPosition) {
-            if (!((PageAdapter5) adapter).isLoading() && !((PageAdapter5) adapter).isLoaded()) {
-                ((PageAdapter5) adapter).setLoading(true);
+            if (!((PagedAdapter5) adapter).isLoading() && !((PagedAdapter5) adapter).isLoaded()) {
+                ((PagedAdapter5) adapter).setLoading(true);
                 loadMore(adapter.getItemCount() - 1, pageSize);
             }
         }

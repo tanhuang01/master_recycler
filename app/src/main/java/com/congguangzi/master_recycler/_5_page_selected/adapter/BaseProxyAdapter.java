@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
  * 简介: 代理 adapter 需要继承的基类, 用于获取最内层的 adapter, 主要用于刷新数据.
  * 以及最外层的与 {@link RecyclerView} 交互的 adapter, 主要用于更新界面界面显示.
  * <p>
- * 具体使用方式, 参见 {@link PageAdapter5} 和 {@link SelectedAdapter5}
+ * 具体使用方式, 参见 {@link PagedAdapter5} 和 {@link SelectedAdapter5}
  *
  * @author congguangzi (congspark@163.com) 2018/4/2.
  */

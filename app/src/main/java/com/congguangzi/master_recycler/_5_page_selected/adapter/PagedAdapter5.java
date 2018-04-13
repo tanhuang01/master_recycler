@@ -184,6 +184,8 @@ public class PagedAdapter5<T> extends BaseProxyAdapter {
      */
     public void appendData(List<T> set) {
         if (set == null) {
+            loading = false;
+            loaded = false;
             return;
         }
         if (set.size() > 0) {
@@ -208,6 +210,11 @@ public class PagedAdapter5<T> extends BaseProxyAdapter {
 
             loaded = set.size() % pageSize() != 0;
         }
+    }
+
+    public void clearData() {
+        ((IAppendData) super.getDataAdapter()).clearData();
+        notifyDataSetChanged();
     }
 
     static class PageViewHolder extends RecyclerView.ViewHolder {

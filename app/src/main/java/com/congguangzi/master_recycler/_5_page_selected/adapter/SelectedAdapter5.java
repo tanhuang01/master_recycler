@@ -133,6 +133,23 @@ public class SelectedAdapter5<T> extends BaseProxyAdapter {
         return super.adapter == null ? 0 : super.adapter.getItemCount();
     }
 
+    /**
+     * clear the selected background
+     */
+    public void clearSelected() {
+        if (selectedIndex > 0) {
+            notifyItemChanged(selectedIndex, KEY_UPDATE_CLEAR);
+            selectedIndex = -1;
+        }
+    }
+
+    /**
+     * clear the adapter data
+     */
+    public void clearData() {
+        ((IAppendData) super.getDataAdapter()).clearData();
+        notifyDataSetChanged();
+    }
 
     public SelectedAdapter5 setOnItemPositionSelectedListener(OnItemPositionSelectedListener l) {
         this.onItemPositionSelectedListener = l;

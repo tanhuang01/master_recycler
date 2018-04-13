@@ -27,4 +27,11 @@ public interface IAppendData<T> {
      * @param set 带替换的集合
      */
     void setData(List<T> set);
+
+    /**
+     * 清空 adapter 中的数据.
+     * <p>
+     * <b>NOTE:</b> 不需要在初始 adapter 中执行更新操作
+     */
+    void clearData();
 }

@@ -54,10 +54,15 @@ public class NormalAdapter5 extends RecyclerView.Adapter<NormalAdapter5.NormalVi
      * @param set 带替换的集合.
      */
     public void setData(@Nullable List<Item> set) {
-        if (set == null || set.isEmpty()) {
+        if (set == null) {
             return;
         }
         data = set;
+    }
+
+    @Override
+    public void clearData() {
+        data = new ArrayList<>();
     }
 
     @Override

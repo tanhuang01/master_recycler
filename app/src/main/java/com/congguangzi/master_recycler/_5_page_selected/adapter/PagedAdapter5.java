@@ -120,6 +120,15 @@ public class PagedAdapter5<T> extends BaseProxyAdapter {
     }
 
     @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+        if (payloads == null || payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            super.adapter.onBindViewHolder(holder, position, payloads);
+        }
+    }
+
+    @Override
     public int getItemViewType(int position) {
         if (position == super.adapter.getItemCount()) {
             return TYPE_BOTTOM;

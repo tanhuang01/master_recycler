@@ -52,7 +52,8 @@ public abstract class BaseProxyAdapter extends RecyclerView.Adapter {
         if (proxyAdapter == null) {
             return this;
         }
-        return proxyAdapter instanceof BaseProxyAdapter ? ((BaseProxyAdapter) proxyAdapter).getRecyclerViewAdapter() : proxyAdapter;
+        return proxyAdapter instanceof BaseProxyAdapter ?
+                ((BaseProxyAdapter) proxyAdapter).getRecyclerViewAdapter() : proxyAdapter;
     }
 
     private void setProxyAdapter(RecyclerView.Adapter proxyAdapter) {

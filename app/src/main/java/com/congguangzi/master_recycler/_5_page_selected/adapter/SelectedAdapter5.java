@@ -100,9 +100,6 @@ public class SelectedAdapter5<T> extends BaseProxyAdapter {
 //            Log.i("activity_5_sel", "add selctedListener" + position);
         }
 
-        // 设置背景色的选择状态.
-        holder.itemView.setSelected(selectedIndex == position);
-
         holder.itemView.setTag(R.id.key_position, position);
 //        Log.e("activity_5_sel", "add position: " + position);
         holder.itemView.setOnClickListener(selectedListener);

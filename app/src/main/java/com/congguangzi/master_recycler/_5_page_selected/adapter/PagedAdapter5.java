@@ -197,15 +197,14 @@ public class PagedAdapter5<T> extends BaseProxyAdapter {
             loaded = false;
             return;
         }
-        if (set.size() > 0) {
-            // it can cast right, or an exception has thrown in the constructor
-            ((IAppendData) super.getDataAdapter()).appendData(set);
-            super.getRecyclerViewAdapter().notifyDataSetChanged();
-        }
         if (set.size() < pageSize()) {
             loaded = true;
         }
         loading = false;
+
+        // it can cast right, or an exception has thrown in the constructor
+        ((IAppendData) super.getDataAdapter()).appendData(set);
+        super.getRecyclerViewAdapter().notifyDataSetChanged();
     }
 
     /**
